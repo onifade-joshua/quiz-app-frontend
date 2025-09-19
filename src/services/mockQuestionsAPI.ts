@@ -72,9 +72,4 @@ export class MockQuestionsAPI {
   }
 }
 
-<<<<<<< HEAD
 export const mockQuestionsAPI = new MockQuestionsAPI()
-=======
-// Export singleton instance
-export const mockQuestionsAPI = new MockQuestionsAPI()
->>>>>>> 5703b96e5bb4fca5d58bd706b232e94c545200f4

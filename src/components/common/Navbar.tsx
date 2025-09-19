@@ -13,6 +13,9 @@ export const Navbar: React.FC = () => {
   const [mobileOpen, setMobileOpen] = useState(false)
 
   const handleLogout = async () => {
+    const confirmed = window.confirm('Are you sure you want to log out?')
+    if (!confirmed) return
+
     try {
       await authAPI.logout()
       logout()
@@ -20,6 +23,7 @@ export const Navbar: React.FC = () => {
       navigate('/auth')
     } catch (error) {
       console.error('Logout error:', error)
+      toast.error('Logout failed. Please try again.')
     }
   }
 

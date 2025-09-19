@@ -1,7 +1,3 @@
-<<<<<<< HEAD
-=======
-// For UI testing (current setup)
->>>>>>> 5703b96e5bb4fca5d58bd706b232e94c545200f4
 import { mockAuthAPI } from './mockAuthAPI'
 import { mockQuestionsAPI } from './mockQuestionsAPI'
 import { mockQuizAPI } from './mockQuizAPI'

@@ -63,9 +63,4 @@ export class MockAuthAPI {
   }
 }
 
-<<<<<<< HEAD
 export const mockAuthAPI = new MockAuthAPI()
-=======
-// Export singleton instance
-export const mockAuthAPI = new MockAuthAPI()
->>>>>>> 5703b96e5bb4fca5d58bd706b232e94c545200f4
