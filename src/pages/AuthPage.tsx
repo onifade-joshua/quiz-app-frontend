@@ -1,16 +1,54 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { Navigate } from 'react-router-dom'
 import { LoginForm } from '../components/auth/LoginForm'
 import { RegisterForm } from '../components/auth/RegisterForm'
 import { useStore } from '../store/useStore'
+import { authAPI } from '../services/api'
+import toast from 'react-hot-toast'
 
 export const AuthPage: React.FC = () => {
   const [isLogin, setIsLogin] = useState(true)
-  const { isAuthenticated } = useStore()
+  const [loading, setLoading] = useState(true)
+  const { isAuthenticated, setUser } = useStore()
 
-  if (isAuthenticated) {
-    return <Navigate to="/questions" replace />
+  //  Auto-login if token exists
+  useEffect(() => {
+    const fetchCurrentUser = async () => {
+      const token = localStorage.getItem('token')
+      if (!token) {
+        setLoading(false)
+        return
+      }
+
+      try {
+        const currentUser = await authAPI.getMe()
+        setUser(currentUser)
+      } catch (err: any) {
+        console.error('Failed to fetch current user:', err)
+        localStorage.removeItem('token')
+        toast.error('Session expired. Please login again.')
+      } finally {
+        setLoading(false)
+      }
+    }
+
+    fetchCurrentUser()
+  }, [setUser])
+
+  // Show loader while checking token
+  if (loading) {
+    return (
+      <div className="flex justify-center items-center min-h-screen">
+        <p className="text-lg text-gray-600">Loading...</p>
+      </div>
+    )
   }
+
+  // Redirect if already authenticated
+  if (isAuthenticated) {
+  return <Navigate to="/" replace />
+}
+
 
   return (
     <div className="min-h-screen flex flex-col md:flex-row">
@@ -42,20 +80,12 @@ export const AuthPage: React.FC = () => {
             </p>
           </div>
 
+          {/* Render forms */}
           {isLogin ? (
             <LoginForm onToggleMode={() => setIsLogin(false)} />
           ) : (
             <RegisterForm onToggleMode={() => setIsLogin(true)} />
           )}
-
-          {/* Demo credentials (only for dev/demo) */}
-          <div className="mt-8 text-center bg-gray-50 p-3 rounded-md border border-gray-200">
-            <p className="text-sm text-gray-600">
-              Demo login: <br />
-              <span className="font-mono text-gray-800">demo@example.com</span> /{' '}
-              <span className="font-mono text-gray-800">password123</span>
-            </p>
-          </div>
         </div>
       </div>
     </div>

@@ -29,17 +29,18 @@ export const QuestionsPage: React.FC = () => {
   }, [])
 
   const fetchQuestions = async () => {
-    setQuestionsLoading(true)
-    try {
-      const data = await questionsAPI.getAll()
-      setQuestions(data)
-    } catch (error) {
-      console.error('Failed to fetch questions:', error)
-      toast.error('Failed to load questions')
-    } finally {
-      setQuestionsLoading(false)
-    }
+  setQuestionsLoading(true)
+  try {
+    const data = await questionsAPI.getAll()
+    setQuestions(Array.isArray(data) ? data : [])
+  } catch (error) {
+    console.error('Failed to fetch questions:', error)
+    setQuestions([]) // fallback to empty array
+    toast.error('Failed to load questions')
+  } finally {
+    setQuestionsLoading(false)
   }
+}
 
   const handleCreateQuestion = async (data: CreateQuestionData) => {
     setIsFormLoading(true)

@@ -11,7 +11,7 @@ interface QuestionsListProps {
 }
 
 export const QuestionsList: React.FC<QuestionsListProps> = ({
-  questions,
+  questions = [],
   onEdit,
   onDelete,
   isLoading = false
@@ -24,7 +24,7 @@ export const QuestionsList: React.FC<QuestionsListProps> = ({
     )
   }
 
-  if (questions.length === 0) {
+  if (!questions || questions.length === 0) {
     return (
       <div className="text-center py-12">
         <div className="text-gray-400 text-6xl mb-4">📝</div>

@@ -1,18 +1,20 @@
 import React, { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { useStore } from '../../store/useStore'
-import { authAPI } from '../../services/api'
+import {authAPI} from '../../services/api'
 import toast from 'react-hot-toast'
+
+
 
 interface LoginFormProps {
   onToggleMode: () => void
 }
 
 export const LoginForm: React.FC<LoginFormProps> = ({ onToggleMode }) => {
-  const [email, setEmail] = useState('demo@example.com')
-  const [password, setPassword] = useState('password123')
+  const [email, setEmail] = useState('')
+  const [password, setPassword] = useState('')
   const [isLoading, setIsLoading] = useState(false)
-  
+
   const { setUser } = useStore()
   const navigate = useNavigate()
 
@@ -25,8 +27,8 @@ export const LoginForm: React.FC<LoginFormProps> = ({ onToggleMode }) => {
       setUser(response.user)
       toast.success('Login successful!')
       navigate('/questions', { replace: true })
-    } catch (error) {
-      toast.error('Invalid credentials. Use demo@example.com / password123')
+    } catch (error: any) {
+      toast.error(error?.response?.data?.message || 'Invalid credentials')
     } finally {
       setIsLoading(false)
     }
@@ -78,12 +80,6 @@ export const LoginForm: React.FC<LoginFormProps> = ({ onToggleMode }) => {
         >
           Don't have an account? Sign up
         </button>
-      </div>
-
-      <div className="mt-4 p-3 bg-blue-50 rounded-md">
-        <p className="text-sm text-blue-600">
-          Demo credentials are pre-filled. Just click "Sign in"!
-        </p>
       </div>
     </form>
   )

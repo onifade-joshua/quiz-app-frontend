@@ -4,7 +4,7 @@ import { formatTime } from '../../utils/helpers'
 interface TimerProps {
   startTime: number
   isActive: boolean
-  duration?: number // in seconds (optional, defaults to 5 minutes)
+  duration?: number // in seconds (defaults to 5 minutes)
   onTimeUp?: () => void
 }
 
