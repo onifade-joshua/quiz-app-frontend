@@ -52,6 +52,7 @@ export const Navbar: React.FC = () => {
           >
             <HomeIcon className="h-4 w-4 mr-1" />
             Dashboard
+            <ChevronRightIcon className="h-4 w-4 ml-1" />
           </Link>
 
           <Link
@@ -65,6 +66,7 @@ export const Navbar: React.FC = () => {
           >
             <QuestionMarkCircleIcon className="h-4 w-4 mr-1" />
             Questions
+            <ChevronRightIcon className="h-4 w-4 ml-1" />
           </Link>
 
           <Link
@@ -92,6 +94,7 @@ export const Navbar: React.FC = () => {
           >
             <ClipboardDocumentCheckIcon className="h-4 w-4 mr-1" />
             Results
+            <ChevronRightIcon className="h-4 w-4 ml-1" />
           </Link>
 
           <Link
@@ -105,6 +108,7 @@ export const Navbar: React.FC = () => {
           >
             <UserCircleIcon className="h-4 w-4 mr-1" />
             Profile
+            <ChevronRightIcon className="h-4 w-4 ml-1" />
           </Link>
         </>
       )}
