@@ -4,7 +4,15 @@ import { useStore } from '../../store/useStore'
 import { authAPI } from '../../services/api'
 import { Button } from './Button'
 import toast from 'react-hot-toast'
-import { ChevronRightIcon, Bars3Icon, XMarkIcon } from '@heroicons/react/24/outline'
+import {
+  ChevronRightIcon,
+  Bars3Icon,
+  XMarkIcon,
+  HomeIcon,
+  QuestionMarkCircleIcon,
+  ClipboardDocumentCheckIcon,
+  UserCircleIcon
+} from '@heroicons/react/24/outline'
 
 export const Navbar: React.FC = () => {
   const { user, logout } = useStore()
@@ -34,16 +42,31 @@ export const Navbar: React.FC = () => {
       {user && (
         <>
           <Link
+            to="/dashboard"
+            className={`flex items-center px-3 py-2 rounded-md text-sm font-medium transition-colors ${
+              isActive('/dashboard')
+                ? 'text-primary-600 bg-primary-50'
+                : 'text-gray-700 hover:text-primary-600'
+            }`}
+            onClick={() => setMobileOpen(false)}
+          >
+            <HomeIcon className="h-4 w-4 mr-1" />
+            Dashboard
+          </Link>
+
+          <Link
             to="/questions"
-            className={`block px-3 py-2 rounded-md text-sm font-medium transition-colors ${
+            className={`flex items-center px-3 py-2 rounded-md text-sm font-medium transition-colors ${
               isActive('/questions')
                 ? 'text-primary-600 bg-primary-50'
                 : 'text-gray-700 hover:text-primary-600'
             }`}
             onClick={() => setMobileOpen(false)}
           >
+            <QuestionMarkCircleIcon className="h-4 w-4 mr-1" />
             Questions
           </Link>
+
           <Link
             to="/quiz"
             className={`flex items-center px-3 py-2 rounded-md text-sm font-medium transition-colors ${
@@ -53,8 +76,35 @@ export const Navbar: React.FC = () => {
             }`}
             onClick={() => setMobileOpen(false)}
           >
+            <ClipboardDocumentCheckIcon className="h-4 w-4 mr-1" />
             Take Quiz
             <ChevronRightIcon className="h-4 w-4 ml-1" />
+          </Link>
+
+          <Link
+            to="/results"
+            className={`flex items-center px-3 py-2 rounded-md text-sm font-medium transition-colors ${
+              isActive('/results')
+                ? 'text-primary-600 bg-primary-50'
+                : 'text-gray-700 hover:text-primary-600'
+            }`}
+            onClick={() => setMobileOpen(false)}
+          >
+            <ClipboardDocumentCheckIcon className="h-4 w-4 mr-1" />
+            Results
+          </Link>
+
+          <Link
+            to="/profile"
+            className={`flex items-center px-3 py-2 rounded-md text-sm font-medium transition-colors ${
+              isActive('/profile')
+                ? 'text-primary-600 bg-primary-50'
+                : 'text-gray-700 hover:text-primary-600'
+            }`}
+            onClick={() => setMobileOpen(false)}
+          >
+            <UserCircleIcon className="h-4 w-4 mr-1" />
+            Profile
           </Link>
         </>
       )}

@@ -1,24 +1,24 @@
 import React, { useState, useEffect } from 'react'
 import { formatTime } from '../../utils/helpers'
+import { motion, AnimatePresence } from 'framer-motion'
 
 interface TimerProps {
   startTime: number
   isActive: boolean
-  duration?: number // in seconds (defaults to 5 minutes)
+  duration?: number // seconds (default 5 minutes)
   onTimeUp?: () => void
 }
 
 export const Timer: React.FC<TimerProps> = ({
   startTime,
   isActive,
-  duration = 300, // default = 5 minutes
-  onTimeUp
+  duration = 300,
+  onTimeUp,
 }) => {
   const [remainingTime, setRemainingTime] = useState(duration)
 
   useEffect(() => {
     let interval: NodeJS.Timeout
-
     if (isActive && startTime) {
       interval = setInterval(() => {
         const elapsed = Math.floor((Date.now() - startTime) / 1000)
@@ -27,26 +27,44 @@ export const Timer: React.FC<TimerProps> = ({
         if (timeLeft <= 0) {
           clearInterval(interval)
           setRemainingTime(0)
-          if (onTimeUp) onTimeUp()
+          onTimeUp?.()
         } else {
           setRemainingTime(timeLeft)
         }
       }, 1000)
     }
-
-    return () => {
-      if (interval) clearInterval(interval)
-    }
+    return () => interval && clearInterval(interval)
   }, [isActive, startTime, duration, onTimeUp])
 
+  const isCritical = remainingTime <= 30
+
   return (
-    <div className="flex items-center text-lg font-mono">
-      <div className="bg-gray-100 px-3 py-2 rounded-lg">
-        <span className="text-gray-600">Time Left: </span>
-        <span className={`font-semibold ${remainingTime <= 30 ? 'text-red-600' : 'text-gray-900'}`}>
-          {formatTime(remainingTime)}
-        </span>
+    <motion.div
+      initial={{ opacity: 0, y: -10 }}
+      animate={{ opacity: 1, y: 0 }}
+      className="flex items-center justify-center text-lg font-mono"
+    >
+      <div
+        className={`px-4 py-2 rounded-xl shadow-md border ${
+          isCritical ? 'bg-red-50 border-red-300' : 'bg-gray-50 border-gray-200'
+        }`}
+      >
+        <span className="text-gray-600 mr-2">⏳ Time Left:</span>
+        <AnimatePresence mode="wait">
+          <motion.span
+            key={remainingTime}
+            initial={{ scale: 0.8, opacity: 0 }}
+            animate={{ scale: 1, opacity: 1 }}
+            exit={{ scale: 1.2, opacity: 0 }}
+            transition={{ duration: 0.2 }}
+            className={`font-bold ${
+              isCritical ? 'text-red-600' : 'text-gray-900'
+            }`}
+          >
+            {formatTime(remainingTime)}
+          </motion.span>
+        </AnimatePresence>
       </div>
-    </div>
+    </motion.div>
   )
 }
