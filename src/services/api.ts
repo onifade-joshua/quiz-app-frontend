@@ -1,6 +1,6 @@
 import axios from "axios";
-import type { Question, CreateQuestionData, User, QuizAnswer, QuizResult } from "../types";
-
+// import type { Question, CreateQuestionData, User, QuizAnswer, QuizResult } from "../types";
+import type { Question, CreateQuestionData, User } from "../types";
 // Backend API URL
 const API_URL = import.meta.env.VITE_API_URL || "http://localhost:5000/api";
 
@@ -79,8 +79,23 @@ export const quizAPI = {
     const res = await api.get<Question[]>("/quiz/start");
     return res.data;
   },
-  submit: async (payload: { answers: QuizAnswer[]; timeElapsed: number }): Promise<QuizResult> => {
-    const res = await api.post<QuizResult>("/quiz/submit", payload);
+  submit: async (data: {
+    userId: string;
+    answers: any[];
+    timeElapsed: number;
+    totalQuestions: number;
+  }): Promise<{
+    result: {
+      score: number;
+      total: number;
+      percentage: number;
+      timeElapsed: number;
+    };
+  }> => {
+    const res = await api.post<
+      { result: { score: number; total: number; percentage: number; timeElapsed: number } }
+    >("/quiz/submit", data);
     return res.data;
   },
 };
+

@@ -68,10 +68,11 @@ Once backend is connected:
 ```
 src/
 ├── components/          # Reusable UI components
-│   ├── common/         # Shared components (Button, Input, etc.)
-│   ├── auth/           # Authentication components
-│   ├── questions/      # Question management components
-│   └── quiz/           # Quiz taking components
+│   ├── common/   Button.tsx,  Dashboard.tsx, Input.tsx, LoadingSpinner.tsx, Navbar.tsx, Profile.tsx, Result.tsx     
+│   ├── auth/  LoginForm.tsx, RegisterForm.tsx         # Authentication components
+│   ├── questions/  QuestioCard.tsx, QuestionForm.tsx, QuestionList.tsx    # Question management components
+│   └── quiz/  QuizQuestion.tsx, QuizResult.tsx, Timer.tsx         # Quiz taking components
+├── ProtectedRoute.tsx 
 ├── pages/              # Route-level components
 │   ├── AuthPage.tsx    # Login/Register page
 │   ├── QuestionsPage.tsx # Questions management
@@ -84,7 +85,10 @@ src/
 │   └── index.ts        # Shared interfaces and types
 ├── utils/              # Helper functions
 │   └── helpers.ts      # Utility functions
-└── App.tsx             # Main application component
+└── App.tsx
+├── main.tsx 
+             
+├── .env 
 ```
 
 ## 🚀 Quick Start

@@ -1,7 +1,7 @@
 import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom'
 import { AuthPage } from './pages/AuthPage'
 import { QuestionsPage } from './pages/QuestionsPage'
-import { QuizPage } from './pages/QuizPage'
+import QuizPage from "./pages/QuizPage"; 
 import { Dashboard } from '../src/components/common/Dashboard'
 import  Profile  from '../src/components/common/Profile'
 import { Results } from '../src/components/common/Results'
