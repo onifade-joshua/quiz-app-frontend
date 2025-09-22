@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useStore } from "../store/useStore";
 import Timer from "../components/quiz/Timer";
+import { QuizQuestion } from "../components/quiz/QuizQuestion";
 import { quizAPI } from "../services/api";
 
 const QuizPage: React.FC = () => {
@@ -86,35 +87,22 @@ const QuizPage: React.FC = () => {
 
       {/* Render quiz questions */}
       {currentQuiz.map((q, index) => {
-        const options = [q.option1, q.option2, q.option3, q.option4];
-
+        const selected = answers.find((a) => a.questionId === q.id)?.selectedAnswer;
         return (
-          <div key={q.id} className="mb-6 p-4 border rounded">
-            <p className="font-semibold mb-2">
-              {index + 1}. {q.question}
-            </p>
-            {options.map((option, i) => (
-              <label key={i} className="block">
-                <input
-                  type="radio"
-                  name={`question-${q.id}`}
-                  value={i + 1}
-                  checked={
-                    answers.find((a) => a.questionId === q.id)
-                      ?.selectedAnswer === i + 1
-                  }
-                  onChange={() => setAnswer(q.id, i + 1)}
-                />
-                <span className="ml-2">{option}</span>
-              </label>
-            ))}
-          </div>
+          <QuizQuestion
+            key={q.id}
+            question={q}
+            selectedAnswer={selected}
+            onAnswerSelect={(answer) => setAnswer(q.id, answer)}
+            questionNumber={index + 1}
+            totalQuestions={currentQuiz.length}
+          />
         );
       })}
 
       {isQuizActive && currentQuiz.length > 0 && (
         <button
-          className="bg-blue-500 text-white px-4 py-2 rounded"
+          className="bg-blue-500 text-white px-4 py-2 rounded mt-6"
           onClick={handleSubmitQuiz}
         >
           Submit Quiz
