@@ -40,7 +40,9 @@ const QuizPage: React.FC = () => {
   // Handle quiz submission
   const handleSubmitQuiz = async () => {
     const state = useStore.getState();
-    const timeElapsed = Math.floor((Date.now() - (state.startTime ?? 0)) / 1000);
+    const timeElapsed = Math.floor(
+      (Date.now() - (state.startTime ?? 0)) / 1000
+    );
 
     try {
       const res = await quizAPI.submit({
@@ -98,8 +100,8 @@ const QuizPage: React.FC = () => {
                   name={`question-${q.id}`}
                   value={i + 1}
                   checked={
-                    answers.find((a) => a.questionId === q.id)?.selectedAnswer ===
-                    i + 1
+                    answers.find((a) => a.questionId === q.id)
+                      ?.selectedAnswer === i + 1
                   }
                   onChange={() => setAnswer(q.id, i + 1)}
                 />
@@ -110,12 +112,14 @@ const QuizPage: React.FC = () => {
         );
       })}
 
-      <button
-        className="bg-blue-500 text-white px-4 py-2 rounded"
-        onClick={handleSubmitQuiz}
-      >
-        Submit Quiz
-      </button>
+      {isQuizActive && currentQuiz.length > 0 && (
+        <button
+          className="bg-blue-500 text-white px-4 py-2 rounded"
+          onClick={handleSubmitQuiz}
+        >
+          Submit Quiz
+        </button>
+      )}
     </div>
   );
 };
