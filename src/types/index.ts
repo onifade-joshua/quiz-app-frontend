@@ -224,3 +224,92 @@ export interface CommunitySearchFilters {
   dateRange?: { start: string; end: string }
   sortBy?: 'newest' | 'oldest' | 'popular' | 'trending'
 }
+// Add these to your existing types file
+
+export interface ImportedDocument {
+  id: string
+  title: string
+  type: 'text' | 'audio' | 'screenshot' | 'image' | 'file' | 'handwritten'
+  content: string
+  audioUrl?: string
+  imageUrl?: string
+  uploadedAt: string
+  processed: boolean
+  textExplanation?: string
+  audioExplanation?: string
+  tags: string[]
+  subject: string
+}
+
+export interface CBTQuestion {
+  id: string
+  documentId: string
+  question: string
+  options: {
+    A: string
+    B: string
+    C: string
+    D: string
+  }
+  correctAnswer: 'A' | 'B' | 'C' | 'D'
+  explanation: string
+  audioExplanation?: string
+  difficulty: 'easy' | 'medium' | 'hard'
+  subject: string
+  topic: string
+  timeAllotted: number // seconds per question
+  points: number
+}
+
+export interface CBTSession {
+  id: string
+  title: string
+  documentIds: string[]
+  questions: CBTQuestion[]
+  difficulty: 'mixed' | 'easy' | 'medium' | 'hard'
+  timeLimit: number // total time in minutes
+  totalQuestions: number
+  status: 'not_started' | 'in_progress' | 'completed' | 'auto_submitted'
+  startedAt?: string
+  completedAt?: string
+  autoSubmitted?: boolean
+}
+
+export interface CBTAnswer {
+  questionId: string
+  selectedAnswer: 'A' | 'B' | 'C' | 'D' | null
+  timeSpent: number
+  flagged: boolean
+  answered: boolean
+}
+
+export interface CBTResult {
+  sessionId: string
+  userId: string
+  answers: CBTAnswer[]
+  score: number
+  percentage: number
+  totalQuestions: number
+  correctAnswers: number
+  incorrectAnswers: number
+  unanswered: number
+  timeSpent: number
+  completedAt: string
+  breakdown: {
+    easy: { correct: number; total: number }
+    medium: { correct: number; total: number }
+    hard: { correct: number; total: number }
+  }
+  subjectBreakdown: Record<string, { correct: number; total: number }>
+}
+
+export interface CBTReview {
+  questionId: string
+  question: CBTQuestion
+  userAnswer: 'A' | 'B' | 'C' | 'D' | null
+  correctAnswer: 'A' | 'B' | 'C' | 'D'
+  isCorrect: boolean
+  explanation: string
+  audioExplanation?: string
+  timeSpent: number
+}
