@@ -1,5 +1,5 @@
-import React from "react"
 import { motion } from "framer-motion"
+import { useNavigate } from "react-router-dom"
 import { ChevronRight, Plus } from "lucide-react"
 
 export interface DocumentType {
@@ -16,6 +16,12 @@ interface Props {
 }
 
 export default function DocumentImportSection({ documentTypes }: Props) {
+  const navigate = useNavigate()
+
+  const handleDocumentTypeClick = () => {
+    navigate('/cbt-practice')
+  }
+
   return (
     <div className="bg-white rounded-2xl shadow-sm border border-slate-100 overflow-hidden">
       {/* Header */}
@@ -40,6 +46,7 @@ export default function DocumentImportSection({ documentTypes }: Props) {
           {documentTypes.map((type, index) => (
             <motion.button
               key={type.title}
+              onClick={handleDocumentTypeClick}
               className={`p-4 border-2 ${type.borderColor} rounded-xl text-left transition-all duration-300 ${type.hoverColor} group w-full`}
               whileHover={{ scale: 1.02 }}
               whileTap={{ scale: 0.98 }}
