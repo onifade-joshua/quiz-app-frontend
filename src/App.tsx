@@ -5,6 +5,7 @@ import QuizPage from "./pages/QuizPage";
 import  Dashboard  from '../src/components/common/Dashboard'
 import { ProtectedRoute } from './components/ProtectedRoute'
 import { Toaster } from 'react-hot-toast';
+import StudyCommunity from './pages/StudyCommunity';
 
 function App() {
   return (
@@ -15,6 +16,7 @@ function App() {
         <Route path="/questions" element={<ProtectedRoute><QuestionsPage /></ProtectedRoute>} />
         <Route path="/quiz" element={<ProtectedRoute><QuizPage /></ProtectedRoute>} />
         <Route path="/dashboard" element={<ProtectedRoute><Dashboard /></ProtectedRoute>} />
+        <Route path="/study-community" element={<ProtectedRoute><StudyCommunity /></ProtectedRoute>} />
         <Route path="/" element={<Navigate to="/dashboard" replace />} />
         <Route path="*" element={<Navigate to="/auth" replace />} />
       </Routes>
