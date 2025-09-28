@@ -65,7 +65,7 @@ export default function Dashboard() {
   const quickActions: QuickAction[] = [
     { title: "CBT Practice", description: "Nigerian university standard questions", icon: Target, gradient: "from-blue-500 to-blue-600", difficulty: "Mixed Difficulty", route: "/cbt-practice" },
     { title: "Study Community", description: "Connect with students nationwide", icon: Users, gradient: "from-green-500 to-green-600", difficulty: "Join Discussion", route: "/study-community" },
-    { title: "Audio Explanations", description: "Listen to detailed explanations", icon: Headphones, gradient: "from-purple-500 to-purple-600", difficulty: "New Content", route: "/audio" },
+    { title: "Audio Explanations", description: "Listen to detailed explanations", icon: Headphones, gradient: "from-purple-500 to-purple-600", difficulty: "New Content", route: "/audio-page" },
   ]
 
   const [activeSection, setActiveSection] = useState("overview")

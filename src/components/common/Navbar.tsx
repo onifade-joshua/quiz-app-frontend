@@ -84,9 +84,9 @@ export const Navbar: React.FC = () => {
           </Link>
 
           <Link
-            to="/audio-explanations"
+            to="/audio-page"
             className={`flex items-center px-3 py-2 rounded-md text-sm font-medium transition-colors ${
-              isActive("/audio-explanations")
+              isActive("/audio-page")
                 ? "text-primary-600 bg-primary-50"
                 : "text-gray-700 hover:text-primary-600"
             }`}

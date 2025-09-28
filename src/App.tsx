@@ -7,6 +7,7 @@ import { Toaster } from 'react-hot-toast';
 import StudyCommunity from './pages/StudyCommunity';
 import ProfilePage from './pages/ProfilePage';
 import CBTPracticePage from './pages/CBTPracticePage';
+import AudioPage from './pages/AudioPage';
 
 function App() {
   return (
@@ -18,6 +19,7 @@ function App() {
         <Route path="/dashboard" element={<ProtectedRoute><Dashboard /></ProtectedRoute>} />
          <Route path="/cbt-practice" element={<ProtectedRoute><CBTPracticePage /></ProtectedRoute>} />
         <Route path="/study-community" element={<ProtectedRoute><StudyCommunity /></ProtectedRoute>} />
+        <Route path="/audio-page" element={<ProtectedRoute><AudioPage /></ProtectedRoute>} />
         <Route path="/profile" element={<ProtectedRoute><ProfilePage /></ProtectedRoute>} />
         <Route path="/" element={<Navigate to="/dashboard" replace />} />
         <Route path="*" element={<Navigate to="/auth" replace />} />
