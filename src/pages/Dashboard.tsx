@@ -22,11 +22,11 @@ import {
   Bell,
 } from "lucide-react"
 
-import DocumentImportSection, { type DocumentType } from "../common/DocumentImportSection"
-import QuickActionsSection, { type QuickAction } from "../common/QuickActionsSection"
-import DashboardSidebar from "./DashboardSidebar"
-import { Navbar } from "../../components/common/Navbar"
-import { useStore } from "../../store/useStore"
+import DocumentImportSection, { type DocumentType } from "../components/common/DocumentImportSection"
+import QuickActionsSection, { type QuickAction } from "../components/common/QuickActionsSection"
+import DashboardSidebar from "../components/common/DashboardSidebar"
+import { Navbar } from "../components/common/Navbar"
+import { useStore } from "../store/useStore"
 
 export default function Dashboard() {
   // ✅ get logged in user from store

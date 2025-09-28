@@ -2,10 +2,11 @@ import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-d
 import { AuthPage } from './pages/AuthPage'
 import { QuestionsPage } from './pages/QuestionsPage'
 import QuizPage from "./pages/QuizPage"; 
-import  Dashboard  from '../src/components/common/Dashboard'
+import  Dashboard  from './pages/Dashboard'
 import { ProtectedRoute } from './components/ProtectedRoute'
 import { Toaster } from 'react-hot-toast';
 import StudyCommunity from './pages/StudyCommunity';
+import ProfilePage from './pages/ProfilePage';
 
 function App() {
   return (
@@ -17,6 +18,7 @@ function App() {
         <Route path="/quiz" element={<ProtectedRoute><QuizPage /></ProtectedRoute>} />
         <Route path="/dashboard" element={<ProtectedRoute><Dashboard /></ProtectedRoute>} />
         <Route path="/study-community" element={<ProtectedRoute><StudyCommunity /></ProtectedRoute>} />
+        <Route path="/profile" element={<ProtectedRoute><ProfilePage /></ProtectedRoute>} />
         <Route path="/" element={<Navigate to="/dashboard" replace />} />
         <Route path="*" element={<Navigate to="/auth" replace />} />
       </Routes>
