@@ -1,5 +1,6 @@
 import React from "react"
 import { motion } from "framer-motion"
+import { useNavigate } from "react-router-dom"  // ✅ import navigate hook
 
 export interface QuickAction {
   title: string
@@ -15,6 +16,8 @@ interface Props {
 }
 
 export default function QuickActionsSection({ quickActions }: Props) {
+  const navigate = useNavigate() // ✅ setup navigation
+
   return (
     <div className="mt-6 sm:mt-8">
       {/* Section Title */}
@@ -35,6 +38,7 @@ export default function QuickActionsSection({ quickActions }: Props) {
         {quickActions.map((action, index) => (
           <motion.button
             key={action.title}
+            onClick={() => navigate(action.route)} // ✅ navigate when clicked
             className="
               bg-white 
               rounded-2xl 
