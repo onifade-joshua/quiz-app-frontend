@@ -1,4 +1,3 @@
-"use client"
 import { useState } from "react"
 import { motion } from "framer-motion"
 import {
@@ -11,13 +10,10 @@ import {
   Target,
   TrendingUp,
   Brain,
-  // Star,
   MessageSquare,
   Award,
   Bell,
   Search,
-  // Plus,
-  // ChevronRight,
   Headphones,
   FileImage,
   Type,
@@ -31,10 +27,7 @@ import QuickActionsSection, { type QuickAction } from "../common/QuickActionsSec
 import DashboardSidebar from "./DashboardSidebar"
 
 export default function Dashboard() {
-  const user = {
-    name: "Alex Johnson",
-    streak: 12,
-  }
+  const user = { name: "Alex Johnson", streak: 12 }
 
   const stats = [
     { title: "Documents Analyzed", value: "247", change: "+23%", icon: FileText, gradient: "from-blue-500 to-blue-600" },
@@ -78,40 +71,58 @@ export default function Dashboard() {
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-50 via-white to-blue-50">
       {/* Header */}
-      <motion.div className="bg-white border-b border-slate-200" initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: 0.5 }}>
-        <div className="max-w-7xl mx-auto px-6">
+      <motion.div
+        className="bg-white border-b border-slate-200"
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ duration: 0.5 }}
+      >
+        <div className="max-w-7xl mx-auto px-4 sm:px-6">
           <div className="py-6 border-b border-slate-100">
-            <div className="flex items-center justify-between">
+            <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
               <div>
-                <h1 className="text-3xl font-bold text-slate-900">Welcome back, {user.name.split(" ")[0]}! 👋</h1>
-                <p className="text-slate-600 mt-2">
-                  Ready to continue your learning journey? You have 3 new document analyses and 12 practice questions waiting.
+                <h1 className="text-xl sm:text-3xl font-bold text-slate-900">
+                  Welcome back, {user.name.split(" ")[0]}! 👋
+                </h1>
+                <p className="text-slate-600 mt-2 text-sm sm:text-base">
+                  Ready to continue your learning journey? You have 3 new
+                  document analyses and 12 practice questions waiting.
                 </p>
               </div>
-              <div className="flex items-center space-x-4">
-                <div className="relative">
-                  <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-slate-400 w-4 h-4" />
-                  <input type="text" placeholder="Search everything..." className="pl-10 pr-4 py-2 border border-slate-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent w-64" />
+
+              {/* Search & Actions */}
+              <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-3 sm:gap-4 w-full sm:w-auto">
+                <div className="relative flex-1 sm:flex-none">
+                  <Search className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-400 w-4 h-4" />
+                  <input
+                    type="text"
+                    placeholder="Search everything..."
+                    className="w-full sm:w-64 pl-10 pr-4 py-2 border border-slate-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                  />
                 </div>
-                <button className="relative p-2 text-slate-400 hover:text-slate-600 transition-colors">
-                  <Bell className="w-5 h-5" />
-                  <span className="absolute -top-1 -right-1 w-3 h-3 bg-red-500 rounded-full"></span>
-                </button>
-                <button className="p-2 text-slate-400 hover:text-slate-600 transition-colors">
-                  <Settings className="w-5 h-5" />
-                </button>
+                <div className="flex items-center justify-end sm:justify-start gap-3">
+                  <button className="relative p-2 text-slate-400 hover:text-slate-600 transition-colors">
+                    <Bell className="w-5 h-5" />
+                    <span className="absolute -top-1 -right-1 w-3 h-3 bg-red-500 rounded-full"></span>
+                  </button>
+                  <button className="p-2 text-slate-400 hover:text-slate-600 transition-colors">
+                    <Settings className="w-5 h-5" />
+                  </button>
+                </div>
               </div>
             </div>
           </div>
 
           {/* Tabs */}
-          <div className="flex space-x-8 py-4">
+          <div className="flex overflow-x-auto flex-nowrap space-x-4 sm:space-x-8 py-4 scrollbar-hide">
             {dashboardTabs.map((tab) => (
               <button
                 key={tab.id}
                 onClick={() => setActiveSection(tab.id)}
-                className={`flex items-center space-x-2 px-4 py-2 rounded-lg font-medium transition-all ${
-                  activeSection === tab.id ? "bg-blue-100 text-blue-700 shadow-sm" : "text-slate-600 hover:text-slate-900 hover:bg-slate-100"
+                className={`flex items-center space-x-2 px-4 py-2 rounded-lg font-medium transition-all whitespace-nowrap ${
+                  activeSection === tab.id
+                    ? "bg-blue-100 text-blue-700 shadow-sm"
+                    : "text-slate-600 hover:text-slate-900 hover:bg-slate-100"
                 }`}
               >
                 <tab.icon className="w-5 h-5" />
@@ -123,31 +134,58 @@ export default function Dashboard() {
       </motion.div>
 
       {/* Content */}
-      <div className="max-w-7xl mx-auto px-6 py-8">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 py-8">
         {activeSection === "overview" && (
           <>
             {/* Stats */}
-            <motion.div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8" initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.6 }}>
+            <motion.div
+              className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8"
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6 }}
+            >
               {stats.map((stat, index) => (
-                <motion.div key={stat.title} className="bg-white rounded-2xl p-6 shadow-sm border border-slate-100 hover:shadow-md transition-all duration-300" whileHover={{ y: -2 }} initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.6, delay: index * 0.1 }}>
+                <motion.div
+                  key={stat.title}
+                  className="bg-white rounded-2xl p-6 shadow-sm border border-slate-100 hover:shadow-md transition-all duration-300"
+                  whileHover={{ y: -2 }}
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.6, delay: index * 0.1 }}
+                >
                   <div className="flex items-center justify-between mb-4">
-                    <div className={`w-12 h-12 rounded-xl bg-gradient-to-r ${stat.gradient} flex items-center justify-center`}>
+                    <div
+                      className={`w-12 h-12 rounded-xl bg-gradient-to-r ${stat.gradient} flex items-center justify-center`}
+                    >
                       <stat.icon className="w-6 h-6 text-white" />
                     </div>
-                    <span className="text-sm font-semibold text-green-600">{stat.change}</span>
+                    <span className="text-sm font-semibold text-green-600">
+                      {stat.change}
+                    </span>
                   </div>
-                  <h3 className="text-2xl font-bold text-slate-900 mb-1">{stat.value}</h3>
+                  <h3 className="text-2xl font-bold text-slate-900 mb-1">
+                    {stat.value}
+                  </h3>
                   <p className="text-slate-600 text-sm">{stat.title}</p>
                 </motion.div>
               ))}
             </motion.div>
 
-            <div className="grid lg:grid-cols-3 gap-8">
-              <motion.div className="lg:col-span-2" initial={{ opacity: 0, x: -20 }} animate={{ opacity: 1, x: 0 }} transition={{ duration: 0.6, delay: 0.2 }}>
+            <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+              <motion.div
+                className="lg:col-span-2"
+                initial={{ opacity: 0, x: -20 }}
+                animate={{ opacity: 1, x: 0 }}
+                transition={{ duration: 0.6, delay: 0.2 }}
+              >
                 <DocumentImportSection documentTypes={documentTypes} />
                 <QuickActionsSection quickActions={quickActions} />
               </motion.div>
-              <motion.div initial={{ opacity: 0, x: 20 }} animate={{ opacity: 1, x: 0 }} transition={{ duration: 0.6, delay: 0.3 }}>
+              <motion.div
+                initial={{ opacity: 0, x: 20 }}
+                animate={{ opacity: 1, x: 0 }}
+                transition={{ duration: 0.6, delay: 0.3 }}
+              >
                 <DashboardSidebar recentActivity={recentActivity} />
               </motion.div>
             </div>
@@ -156,14 +194,30 @@ export default function Dashboard() {
 
         {/* Placeholder for other sections */}
         {activeSection !== "overview" && (
-          <motion.div className="text-center py-20" initial={{ opacity: 0 }} animate={{ opacity: 1 }}>
+          <motion.div
+            className="text-center py-20"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+          >
             <div className="flex flex-col items-center">
-              {activeSection === "documents" && <FileText className="w-20 h-20 text-slate-300 mb-4" />}
-              {activeSection === "practice" && <Brain className="w-20 h-20 text-slate-300 mb-4" />}
-              {activeSection === "community" && <Users className="w-20 h-20 text-slate-300 mb-4" />}
-              {activeSection === "analytics" && <TrendingUp className="w-20 h-20 text-slate-300 mb-4" />}
-              <h3 className="text-2xl font-bold text-slate-900 mb-2 capitalize">{activeSection}</h3>
-              <p className="text-slate-600">Content for {activeSection} will appear here.</p>
+              {activeSection === "documents" && (
+                <FileText className="w-20 h-20 text-slate-300 mb-4" />
+              )}
+              {activeSection === "practice" && (
+                <Brain className="w-20 h-20 text-slate-300 mb-4" />
+              )}
+              {activeSection === "community" && (
+                <Users className="w-20 h-20 text-slate-300 mb-4" />
+              )}
+              {activeSection === "analytics" && (
+                <TrendingUp className="w-20 h-20 text-slate-300 mb-4" />
+              )}
+              <h3 className="text-2xl font-bold text-slate-900 mb-2 capitalize">
+                {activeSection}
+              </h3>
+              <p className="text-slate-600">
+                Content for {activeSection} will appear here.
+              </p>
             </div>
           </motion.div>
         )}
