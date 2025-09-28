@@ -2,7 +2,7 @@ import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-d
 import { AuthPage } from './pages/AuthPage'
 import { QuestionsPage } from './pages/QuestionsPage'
 import QuizPage from "./pages/QuizPage"; 
-import { Dashboard } from '../src/components/common/Dashboard'
+import  Dashboard  from '../src/components/common/Dashboard'
 import { ProtectedRoute } from './components/ProtectedRoute'
 import { Toaster } from 'react-hot-toast';
 
