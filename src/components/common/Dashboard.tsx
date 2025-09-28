@@ -25,7 +25,7 @@ import {
 import DocumentImportSection, { type DocumentType } from "../common/DocumentImportSection"
 import QuickActionsSection, { type QuickAction } from "../common/QuickActionsSection"
 import DashboardSidebar from "./DashboardSidebar"
-import {Navbar} from "../../components/common/Navbar"
+
 
 export default function Dashboard() {
   const user = { name: "Alex Johnson", streak: 12 }
@@ -71,7 +71,7 @@ export default function Dashboard() {
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-50 via-white to-blue-50">
-     <Navbar />
+     
       {/* Header */}
       <motion.div
         className="bg-white border-b border-slate-200"
