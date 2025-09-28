@@ -26,7 +26,7 @@ export const LoginForm: React.FC<LoginFormProps> = ({ onToggleMode }) => {
       const response = await authAPI.login({ email, password })
       setUser(response.user)
       toast.success('Login successful!')
-      navigate('/questions', { replace: true })
+      navigate('/dashboard', { replace: true })
     } catch (error: any) {
       toast.error(error?.response?.data?.message || 'Invalid credentials')
     } finally {

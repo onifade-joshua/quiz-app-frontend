@@ -3,6 +3,7 @@ export interface User {
   email: string
   name: string
   createdAt: string
+  streak?: number
 }
 
 export interface Question {

@@ -15,7 +15,7 @@ function App() {
         <Route path="/questions" element={<ProtectedRoute><QuestionsPage /></ProtectedRoute>} />
         <Route path="/quiz" element={<ProtectedRoute><QuizPage /></ProtectedRoute>} />
         <Route path="/dashboard" element={<ProtectedRoute><Dashboard /></ProtectedRoute>} />
-        <Route path="/" element={<Navigate to="/questions" replace />} />
+        <Route path="/" element={<Navigate to="/dashboard" replace />} />
         <Route path="*" element={<Navigate to="/auth" replace />} />
       </Routes>
     </Router>

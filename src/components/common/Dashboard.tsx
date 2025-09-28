@@ -12,7 +12,6 @@ import {
   Brain,
   MessageSquare,
   Award,
-  Bell,
   Search,
   Headphones,
   FileImage,
@@ -20,20 +19,30 @@ import {
   Edit3,
   Settings,
   BarChart3,
+  Bell,
 } from "lucide-react"
 
 import DocumentImportSection, { type DocumentType } from "../common/DocumentImportSection"
 import QuickActionsSection, { type QuickAction } from "../common/QuickActionsSection"
 import DashboardSidebar from "./DashboardSidebar"
-
+import { Navbar } from "../../components/common/Navbar"
+import { useStore } from "../../store/useStore"
 
 export default function Dashboard() {
-  const user = { name: "Alex Johnson", streak: 12 }
+  // ✅ get logged in user from store
+  const { user } = useStore()
+
+  // fallback if no user is available
+  const displayName = user?.name || "Guest"
+  const firstName = displayName.split(" ")[0]
+
+  // you can compute streak from user data if available, else default to 0
+  const streak = user?.streak ?? 0
 
   const stats = [
     { title: "Documents Analyzed", value: "247", change: "+23%", icon: FileText, gradient: "from-blue-500 to-blue-600" },
     { title: "Practice Questions", value: "1,432", change: "+18%", icon: Brain, gradient: "from-purple-500 to-purple-600" },
-    { title: "Study Streak", value: `${user.streak} days`, change: "🔥", icon: Target, gradient: "from-orange-500 to-orange-600" },
+    { title: "Study Streak", value: `${streak} days`, change: "🔥", icon: Target, gradient: "from-orange-500 to-orange-600" },
     { title: "Community Rank", value: "#47", change: "↑12", icon: Trophy, gradient: "from-green-500 to-green-600" },
   ]
 
@@ -71,7 +80,8 @@ export default function Dashboard() {
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-50 via-white to-blue-50">
-     
+      <Navbar />
+
       {/* Header */}
       <motion.div
         className="bg-white border-b border-slate-200"
@@ -84,7 +94,7 @@ export default function Dashboard() {
             <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
               <div>
                 <h1 className="text-xl sm:text-3xl font-bold text-slate-900">
-                  Welcome back, {user.name.split(" ")[0]}! 👋
+                  Welcome back, {firstName}! 👋
                 </h1>
                 <p className="text-slate-600 mt-2 text-sm sm:text-base">
                   Ready to continue your learning journey? You have 3 new
