@@ -78,7 +78,7 @@ export const AuthPage: React.FC = () => {
           >
             <span className="text-yellow-300">CBT Portal</span>
             <br />
-            Powered by QuizTech
+            Powered by SamjodaTechSolutions
           </motion.h1>
         </div>
       </div>
