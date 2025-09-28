@@ -65,35 +65,35 @@ export const Navbar: React.FC = () => {
             onClick={() => setMobileOpen(false)}
           >
             <QuestionMarkCircleIcon className="h-4 w-4 mr-1" />
-            Questions
+            CBT Practice
             <ChevronRightIcon className="h-4 w-4 ml-1" />
           </Link>
 
           <Link
-            to="/quiz"
+            to="/cbt-practice"
             className={`flex items-center px-3 py-2 rounded-md text-sm font-medium transition-colors ${
-              isActive('/quiz')
+              isActive('/cbt-practice')
                 ? 'text-primary-600 bg-primary-50'
                 : 'text-gray-700 hover:text-primary-600'
             }`}
             onClick={() => setMobileOpen(false)}
           >
             <ClipboardDocumentCheckIcon className="h-4 w-4 mr-1" />
-            Take Quiz
+            Study Community
             <ChevronRightIcon className="h-4 w-4 ml-1" />
           </Link>
 
           <Link
-            to="/results"
+            to="/audio-explanations"
             className={`flex items-center px-3 py-2 rounded-md text-sm font-medium transition-colors ${
-              isActive('/results')
+              isActive('/audio-explanations')
                 ? 'text-primary-600 bg-primary-50'
                 : 'text-gray-700 hover:text-primary-600'
             }`}
             onClick={() => setMobileOpen(false)}
           >
             <ClipboardDocumentCheckIcon className="h-4 w-4 mr-1" />
-            Results
+            Audio Explanations
             <ChevronRightIcon className="h-4 w-4 ml-1" />
           </Link>
 
