@@ -1,7 +1,6 @@
 import React, { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
-import { useStore } from '../../store/useStore'
-import {authAPI}from '../../services/api'
+import { authAPI } from '../../services/api'
 import toast from 'react-hot-toast'
 
 interface RegisterFormProps {
@@ -16,7 +15,6 @@ export const RegisterForm: React.FC<RegisterFormProps> = ({ onToggleMode }) => {
   })
   const [isLoading, setIsLoading] = useState(false)
 
-  const { setUser } = useStore()
   const navigate = useNavigate()
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -27,21 +25,21 @@ export const RegisterForm: React.FC<RegisterFormProps> = ({ onToggleMode }) => {
   }
 
   const handleSubmit = async (e: React.FormEvent) => {
-  e.preventDefault()
-  setIsLoading(true)
+    e.preventDefault()
+    setIsLoading(true)
 
-  try {
-    const response = await authAPI.register(formData)
-    setUser(response.user) // update store
-    toast.success('Registration successful!')
-     navigate('/auth', { replace: true })
-  } catch (error: any) {
-    toast.error(error?.response?.data?.message || 'Registration failed')
-  } finally {
-    setIsLoading(false)
+    try {
+      await authAPI.register(formData)
+      toast.success('Registration successful! Please login.')
+      
+      // ✅ Instead of logging them in, send them back to /auth login
+      navigate('/auth', { replace: true })
+    } catch (error: any) {
+      toast.error(error?.response?.data?.message || 'Registration failed')
+    } finally {
+      setIsLoading(false)
+    }
   }
-}
-
 
   return (
     <form onSubmit={handleSubmit} className="space-y-6">

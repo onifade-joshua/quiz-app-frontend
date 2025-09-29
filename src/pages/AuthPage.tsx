@@ -66,7 +66,7 @@ export const AuthPage: React.FC = () => {
           animate={{ scale: 1 }}
           transition={{ duration: 1.2, ease: 'easeOut' }}
           src="https://img.freepik.com/free-vector/quiz-comic-pop-art-style_175838-505.jpg"
-          alt="Quiz App"
+          alt="ClassWise"
           className="w-full h-full object-cover"
         />
         <div className="absolute inset-0 bg-gradient-to-t md:bg-gradient-to-r from-primary-900/90 to-primary-700/70 flex items-center justify-center">
@@ -117,7 +117,7 @@ export const AuthPage: React.FC = () => {
             {isLogin ? (
               <LoginForm onToggleMode={() => setIsLogin(false)} />
             ) : (
-              <RegisterForm onToggleMode={() => setIsLogin(false)} />
+              <RegisterForm onToggleMode={() => setIsLogin(true)} />
             )}
           </motion.div>
         </motion.div>
