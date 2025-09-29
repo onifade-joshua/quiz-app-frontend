@@ -32,22 +32,22 @@ import {
 // import { Navbar } from "../components/common/Navbar"
 
 // Simple Navbar component for demo purposes
-const Navbar = () => {
-  return (
-    <nav className="bg-white border-b border-slate-200">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex justify-between h-16">
-          <div className="flex items-center">
-            <span className="text-xl font-bold text-purple-600">EduAudio</span>
-          </div>
-          <div className="flex items-center space-x-4">
-            <button className="text-slate-600 hover:text-slate-900">Profile</button>
-          </div>
-        </div>
-      </div>
-    </nav>
-  )
-}
+// const Navbar = () => {
+//   return (
+//     <nav className="bg-white border-b border-slate-200">
+//       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+//         <div className="flex justify-between h-16">
+//           <div className="flex items-center">
+//             <span className="text-xl font-bold text-purple-600">EduAudio</span>
+//           </div>
+//           <div className="flex items-center space-x-4">
+//             <button className="text-slate-600 hover:text-slate-900">Profile</button>
+//           </div>
+//         </div>
+//       </div>
+//     </nav>
+//   )
+// }
 
 // TypeScript interfaces for component props
 interface AudioExplanation {
@@ -253,7 +253,7 @@ export default function AudioExplanationPage() {
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-50 via-white to-purple-50">
-      <Navbar />
+   
       
       {/* Header */}
       <motion.div
