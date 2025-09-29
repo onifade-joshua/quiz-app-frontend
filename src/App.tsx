@@ -1,6 +1,5 @@
 import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom'
 import { AuthPage } from './pages/AuthPage'
-import { QuestionsPage } from './pages/QuestionsPage'
 import  Dashboard  from './pages/Dashboard'
 import { ProtectedRoute } from './components/ProtectedRoute'
 import { Toaster } from 'react-hot-toast';
@@ -15,7 +14,6 @@ function App() {
       <Toaster position="top-right" reverseOrder={false} />
       <Routes>
         <Route path="/auth" element={<AuthPage />} />
-        <Route path="/questions" element={<ProtectedRoute><QuestionsPage /></ProtectedRoute>} />
         <Route path="/dashboard" element={<ProtectedRoute><Dashboard /></ProtectedRoute>} />
          <Route path="/cbt-practice" element={<ProtectedRoute><CBTPracticePage /></ProtectedRoute>} />
         <Route path="/study-community" element={<ProtectedRoute><StudyCommunity /></ProtectedRoute>} />
