@@ -107,8 +107,8 @@ export const Navbar: React.FC = () => {
           <div className="flex justify-between h-16 items-center">
             {/* Left side */}
             <div className="flex items-center">
-              <Link to="/" className="text-xl font-bold text-primary-600">
-                Quiz App
+              <Link to="/" className="text-xl font-bold text-yellow-500">
+                ClassWise
               </Link>
 
               {/* Desktop links */}
