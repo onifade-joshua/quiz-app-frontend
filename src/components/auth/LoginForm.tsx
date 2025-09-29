@@ -1,10 +1,8 @@
 import React, { useState } from 'react'
-import { useNavigate } from 'react-router-dom'
+import { useNavigate, Link } from 'react-router-dom'
 import { useStore } from '../../store/useStore'
-import {authAPI} from '../../services/api'
+import { authAPI } from '../../services/api'
 import toast from 'react-hot-toast'
-
-
 
 interface LoginFormProps {
   onToggleMode: () => void
@@ -62,6 +60,14 @@ export const LoginForm: React.FC<LoginFormProps> = ({ onToggleMode }) => {
           required
           className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500"
         />
+        <div className="mt-2 text-right">
+          <Link
+            to="/forgot-password"
+            className="text-sm text-blue-600 hover:text-blue-500"
+          >
+            Forgot password?
+          </Link>
+        </div>
       </div>
 
       <button

@@ -76,7 +76,7 @@ export const AuthPage: React.FC = () => {
             transition={{ duration: 0.8, delay: 0.3 }}
             className="text-4xl md:text-5xl font-extrabold text-white text-center px-6 drop-shadow-lg"
           >
-            <span className="text-yellow-300">CBT Portal</span>
+            <span className="text-yellow-300">ClassWise</span>
             <br />
             Powered by SamjodaTechSolutions
           </motion.h1>
@@ -100,7 +100,7 @@ export const AuthPage: React.FC = () => {
             </h2>
             <p className="mt-2 text-sm text-gray-600">
               {isLogin
-                ? 'Sign in to access quizzes and track your progress.'
+                ? 'Sign in to access documents, explanations, tests & solutions.'
                 : 'Create an account to start your learning journey.'}
             </p>
           </div>
@@ -117,7 +117,7 @@ export const AuthPage: React.FC = () => {
             {isLogin ? (
               <LoginForm onToggleMode={() => setIsLogin(false)} />
             ) : (
-              <RegisterForm onToggleMode={() => setIsLogin(true)} />
+              <RegisterForm onToggleMode={() => setIsLogin(false)} />
             )}
           </motion.div>
         </motion.div>
