@@ -7,6 +7,7 @@ import StudyCommunity from './pages/StudyCommunity';
 import ProfilePage from './pages/ProfilePage';
 import CBTPracticePage from './pages/CBTPracticePage';
 import AudioPage from './pages/AudioPage';
+import {ForgotPassword} from './pages/ForgotPassword';
 
 function App() {
   return (
@@ -14,6 +15,7 @@ function App() {
       <Toaster position="top-right" reverseOrder={false} />
       <Routes>
         <Route path="/auth" element={<AuthPage />} />
+        <Route path="/forgot-password" element={<ForgotPassword />} />
         <Route path="/dashboard" element={<ProtectedRoute><Dashboard /></ProtectedRoute>} />
          <Route path="/cbt-practice" element={<ProtectedRoute><CBTPracticePage /></ProtectedRoute>} />
         <Route path="/study-community" element={<ProtectedRoute><StudyCommunity /></ProtectedRoute>} />

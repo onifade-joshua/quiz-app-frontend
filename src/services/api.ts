@@ -39,6 +39,11 @@ export const authAPI = {
     const res = await api.get<{ user: User }>("/auth/me");
     return res.data.user;
   },
+  
+  forgotPassword: async (data: { email: string }) => {
+    const res = await api.post<{ message: string }>("/auth/forgot-password", data);
+    return res.data;
+  },
 };
 
 // ---------- QUESTIONS API ----------
