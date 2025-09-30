@@ -1,7 +1,8 @@
 import { motion, AnimatePresence } from "framer-motion"
-import { X, Sun, Moon } from "lucide-react"
+import { X, Sun, Moon, MessageCircle } from "lucide-react"
 import { useState, useEffect } from "react"
 import { useStore } from "../../store/useStore"
+import SupportChat from "../common/SupportChat"
 
 interface SettingProps {
   isOpen: boolean
@@ -11,6 +12,7 @@ interface SettingProps {
 export default function Setting({ isOpen, onClose }: SettingProps) {
   const { user } = useStore()
   const [darkMode, setDarkMode] = useState(false)
+  const [chatOpen, setChatOpen] = useState(false)
 
   // Load saved theme on mount
   useEffect(() => {
@@ -87,8 +89,31 @@ export default function Setting({ isOpen, onClose }: SettingProps) {
                   )}
                 </button>
               </div>
+
+              {/* Support Section */}
+              <div className="space-y-2">
+                <h4 className="text-sm font-medium text-slate-700 dark:text-slate-300">
+                  Support
+                </h4>
+                <button
+                  className="flex w-full items-center gap-2 rounded-md bg-blue-500 px-3 py-2 text-sm text-white hover:bg-blue-600"
+                  onClick={() => setChatOpen(true)}
+                >
+                  <MessageCircle className="h-4 w-4" />
+                  Chat with Support
+                </button>
+                <p className="text-sm text-slate-600 dark:text-slate-400">
+                  Call us: <span className="font-semibold">+234-800-123-4567</span>
+                </p>
+                <p className="text-sm text-slate-600 dark:text-slate-400">
+                  Email: <span className="font-semibold">support@example.com</span>
+                </p>
+              </div>
             </div>
           </motion.div>
+
+          {/* Support Chat Popup */}
+          <SupportChat isOpen={chatOpen} onClose={() => setChatOpen(false)} />
         </div>
       )}
     </AnimatePresence>
