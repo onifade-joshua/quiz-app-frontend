@@ -40,10 +40,16 @@ export const authAPI = {
     return res.data.user;
   },
   
-  forgotPassword: async (data: { email: string }) => {
+    forgotPassword: async (data: { email: string }) => {
     const res = await api.post<{ message: string }>("/auth/forgot-password", data);
     return res.data;
   },
+
+  resetPassword: async (data: { token: string; password: string }) => {
+    const res = await api.post<{ message: string }>("/auth/reset-password", data);
+    return res.data;
+  },
+
 };
 
 // ---------- QUESTIONS API ----------

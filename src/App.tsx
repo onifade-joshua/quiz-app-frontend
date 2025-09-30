@@ -8,6 +8,7 @@ import ProfilePage from './pages/ProfilePage';
 import CBTPracticePage from './pages/CBTPracticePage';
 import AudioPage from './pages/AudioPage';
 import {ForgotPassword} from './pages/ForgotPassword';
+import  {ResetPassword}  from './pages/ResetPassword';
 
 function App() {
   return (
@@ -16,6 +17,7 @@ function App() {
       <Routes>
         <Route path="/auth" element={<AuthPage />} />
         <Route path="/forgot-password" element={<ForgotPassword />} />
+        <Route path="/reset-password" element={<ResetPassword />} />
         <Route path="/dashboard" element={<ProtectedRoute><Dashboard /></ProtectedRoute>} />
          <Route path="/cbt-practice" element={<ProtectedRoute><CBTPracticePage /></ProtectedRoute>} />
         <Route path="/study-community" element={<ProtectedRoute><StudyCommunity /></ProtectedRoute>} />
