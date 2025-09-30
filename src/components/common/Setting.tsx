@@ -1,6 +1,6 @@
 import { motion, AnimatePresence } from "framer-motion"
 import { X, Sun, Moon } from "lucide-react"
-import { useEffect, useState } from "react"
+import { useState, useEffect } from "react"
 import { useStore } from "../../store/useStore"
 
 interface SettingProps {
@@ -12,25 +12,29 @@ export default function Setting({ isOpen, onClose }: SettingProps) {
   const { user } = useStore()
   const [darkMode, setDarkMode] = useState(false)
 
-  // 👉 Load theme from localStorage on mount
+  // Load saved theme on mount
   useEffect(() => {
     const savedTheme = localStorage.getItem("theme")
     if (savedTheme === "dark") {
       setDarkMode(true)
       document.documentElement.classList.add("dark")
+    } else {
+      setDarkMode(false)
+      document.documentElement.classList.remove("dark")
     }
   }, [])
 
-  // 👉 Save theme to localStorage whenever it changes
-  useEffect(() => {
+  // Handle toggle
+  const toggleDarkMode = () => {
     if (darkMode) {
-      document.documentElement.classList.add("dark")
-      localStorage.setItem("theme", "dark")
-    } else {
       document.documentElement.classList.remove("dark")
       localStorage.setItem("theme", "light")
+    } else {
+      document.documentElement.classList.add("dark")
+      localStorage.setItem("theme", "dark")
     }
-  }, [darkMode])
+    setDarkMode(!darkMode)
+  }
 
   return (
     <AnimatePresence>
@@ -49,7 +53,7 @@ export default function Setting({ isOpen, onClose }: SettingProps) {
                 Settings
               </h3>
               <button onClick={onClose} aria-label="Close settings">
-                <X className="h-5 w-5 text-slate-500 dark:text-slate-300" />
+                <X className="h-5 w-5 text-slate-500 dark:text-white" />
               </button>
             </div>
 
@@ -74,7 +78,7 @@ export default function Setting({ isOpen, onClose }: SettingProps) {
                   className={`rounded-full p-2 transition ${
                     darkMode ? "bg-blue-500" : "bg-slate-200"
                   }`}
-                  onClick={() => setDarkMode(!darkMode)}
+                  onClick={toggleDarkMode}
                 >
                   {darkMode ? (
                     <Moon className="h-4 w-4 text-white" />

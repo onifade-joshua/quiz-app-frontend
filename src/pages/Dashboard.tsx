@@ -49,19 +49,19 @@ export default function Dashboard() {
   ]
 
   const documentTypes: DocumentType[] = [
-    { title: "Text Import", description: "Import and analyze text documents", icon: Type, color: "bg-blue-100 text-blue-600", borderColor: "border-blue-200", hoverColor: "hover:bg-blue-50" },
-    { title: "Screenshot Analysis", description: "Capture and process screenshots", icon: Camera, color: "bg-green-100 text-green-600", borderColor: "border-green-200", hoverColor: "hover:bg-green-50" },
-    { title: "Image Upload", description: "Upload images for text extraction", icon: FileImage, color: "bg-purple-100 text-purple-600", borderColor: "border-purple-200", hoverColor: "hover:bg-purple-50" },
-    { title: "Audio Recording", description: "Record and transcribe audio notes", icon: Mic, color: "bg-red-100 text-red-600", borderColor: "border-red-200", hoverColor: "hover:bg-red-50" },
-    { title: "Handwritten Notes", description: "Convert handwritten text to digital", icon: Edit3, color: "bg-yellow-100 text-yellow-600", borderColor: "border-yellow-200", hoverColor: "hover:bg-yellow-50" },
-    { title: "File Upload", description: "Import PDF, Word, and other files", icon: Upload, color: "bg-indigo-100 text-indigo-600", borderColor: "border-indigo-200", hoverColor: "hover:bg-indigo-50" },
+    { title: "Text Import", description: "Import and analyze text documents", icon: Type, color: "bg-blue-100 text-blue-600 dark:bg-blue-900 dark:text-blue-300", borderColor: "border-blue-200 dark:border-blue-800", hoverColor: "hover:bg-blue-50 dark:hover:bg-blue-800" },
+    { title: "Screenshot Analysis", description: "Capture and process screenshots", icon: Camera, color: "bg-green-100 text-green-600 dark:bg-green-900 dark:text-green-300", borderColor: "border-green-200 dark:border-green-800", hoverColor: "hover:bg-green-50 dark:hover:bg-green-800" },
+    { title: "Image Upload", description: "Upload images for text extraction", icon: FileImage, color: "bg-purple-100 text-purple-600 dark:bg-purple-900 dark:text-purple-300", borderColor: "border-purple-200 dark:border-purple-800", hoverColor: "hover:bg-purple-50 dark:hover:bg-purple-800" },
+    { title: "Audio Recording", description: "Record and transcribe audio notes", icon: Mic, color: "bg-red-100 text-red-600 dark:bg-red-900 dark:text-red-300", borderColor: "border-red-200 dark:border-red-800", hoverColor: "hover:bg-red-50 dark:hover:bg-red-800" },
+    { title: "Handwritten Notes", description: "Convert handwritten text to digital", icon: Edit3, color: "bg-yellow-100 text-yellow-600 dark:bg-yellow-900 dark:text-yellow-300", borderColor: "border-yellow-200 dark:border-yellow-800", hoverColor: "hover:bg-yellow-50 dark:hover:bg-yellow-800" },
+    { title: "File Upload", description: "Import PDF, Word, and other files", icon: Upload, color: "bg-indigo-100 text-indigo-600 dark:bg-indigo-900 dark:text-indigo-300", borderColor: "border-indigo-200 dark:border-indigo-800", hoverColor: "hover:bg-indigo-50 dark:hover:bg-indigo-800" },
   ]
 
   const recentActivity = [
-    { title: "Organic Chemistry Chapter 12 analyzed", time: "2 hours ago", icon: FileText, color: "text-blue-500" },
-    { title: "Completed Advanced Mathematics Quiz", time: "4 hours ago", icon: Brain, color: "text-purple-500" },
-    { title: "New reply in Physics Discussion", time: "6 hours ago", icon: MessageSquare, color: "text-green-500" },
-    { title: "Earned 'Study Streak Champion' badge", time: "1 day ago", icon: Award, color: "text-orange-500" },
+    { title: "Organic Chemistry Chapter 12 analyzed", time: "2 hours ago", icon: FileText, color: "text-blue-500 dark:text-blue-300" },
+    { title: "Completed Advanced Mathematics Quiz", time: "4 hours ago", icon: Brain, color: "text-purple-500 dark:text-purple-300" },
+    { title: "New reply in Physics Discussion", time: "6 hours ago", icon: MessageSquare, color: "text-green-500 dark:text-green-300" },
+    { title: "Earned 'Study Streak Champion' badge", time: "1 day ago", icon: Award, color: "text-orange-500 dark:text-orange-300" },
   ]
 
   const quickActions: QuickAction[] = [
@@ -79,46 +79,41 @@ export default function Dashboard() {
   ]
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-50 via-white to-blue-50">
+    <div className="min-h-screen bg-gradient-to-br from-slate-50 via-white to-blue-50 dark:from-slate-900 dark:via-slate-950 dark:to-slate-900">
       <Navbar />
 
       {/* ✅ Modals */}
-      <Notification
-        isOpen={notificationOpen}
-        onClose={() => setNotificationOpen(false)}
-      />
-      <Setting
-        isOpen={settingsOpen}
-        onClose={() => setSettingsOpen(false)}
-      />
+      <Notification isOpen={notificationOpen} onClose={() => setNotificationOpen(false)} />
+      <Setting isOpen={settingsOpen} onClose={() => setSettingsOpen(false)} />
 
       {/* Header */}
       <motion.div
-        className="bg-white border-b border-slate-200"
+        className="bg-white dark:bg-slate-800 border-b border-slate-200 dark:border-slate-700"
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ duration: 0.5 }}
       >
         <div className="max-w-7xl mx-auto px-4 sm:px-6">
-          <div className="py-6 border-b border-slate-100">
+          <div className="py-6 border-b border-slate-100 dark:border-slate-700">
             <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
               <div>
-                <h1 className="text-xl sm:text-3xl font-bold text-slate-900">
+                <h1 className="text-xl sm:text-3xl font-bold text-slate-900 dark:text-white">
                   Welcome back, {firstName}! 👋
                 </h1>
-                <p className="text-slate-600 mt-2 text-sm sm:text-base">
+                <p className="text-slate-600 dark:text-slate-300 mt-2 text-sm sm:text-base">
                   Ready to continue your learning journey? You have 3 new
                   document analyses and 12 practice questions waiting.
                 </p>
               </div>
+
               {/* Search & Actions */}
               <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-3 sm:gap-4 w-full sm:w-auto">
                 <div className="relative flex-1 sm:flex-none">
-                  <Search className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-400 w-4 h-4" />
+                  <Search className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-400 dark:text-slate-500 w-4 h-4" />
                   <input
                     type="text"
                     placeholder="Search everything..."
-                    className="w-full sm:w-64 pl-10 pr-4 py-2 border border-slate-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                    className="w-full sm:w-64 pl-10 pr-4 py-2 border border-slate-200 dark:border-slate-700 rounded-xl bg-white dark:bg-slate-900 text-slate-900 dark:text-slate-100 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
                   />
                 </div>
                 <div className="flex items-center justify-end sm:justify-start gap-3">
@@ -126,7 +121,7 @@ export default function Dashboard() {
                   <button
                     onClick={() => setNotificationOpen(true)}
                     aria-label="Open notifications"
-                    className="relative p-2 text-slate-400 hover:text-slate-600 hover:bg-slate-100 rounded-lg transition-all"
+                    className="relative p-2 text-slate-400 hover:text-slate-600 dark:text-slate-300 dark:hover:text-white hover:bg-slate-100 dark:hover:bg-slate-700 rounded-lg transition-all"
                   >
                     <Bell className="w-5 h-5" />
                     <span className="absolute top-1 right-1 w-2 h-2 bg-red-500 rounded-full"></span>
@@ -135,7 +130,7 @@ export default function Dashboard() {
                   <button
                     onClick={() => setSettingsOpen(true)}
                     aria-label="Open settings"
-                    className="p-2 text-slate-400 hover:text-slate-600 hover:bg-slate-100 rounded-lg transition-all"
+                    className="p-2 text-slate-400 hover:text-slate-600 dark:text-slate-300 dark:hover:text-white hover:bg-slate-100 dark:hover:bg-slate-700 rounded-lg transition-all"
                   >
                     <Settings className="w-5 h-5" />
                   </button>
@@ -143,6 +138,7 @@ export default function Dashboard() {
               </div>
             </div>
           </div>
+
           {/* Tabs */}
           <div className="flex overflow-x-auto flex-nowrap space-x-4 sm:space-x-8 py-4 scrollbar-hide">
             {dashboardTabs.map((tab) => (
@@ -151,8 +147,8 @@ export default function Dashboard() {
                 onClick={() => setActiveSection(tab.id)}
                 className={`flex items-center space-x-2 px-4 py-2 rounded-lg font-medium transition-all whitespace-nowrap ${
                   activeSection === tab.id
-                    ? "bg-blue-100 text-blue-700 shadow-sm"
-                    : "text-slate-600 hover:text-slate-900 hover:bg-slate-100"
+                    ? "bg-blue-100 dark:bg-blue-900 text-blue-700 dark:text-blue-300 shadow-sm"
+                    : "text-slate-600 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white hover:bg-slate-100 dark:hover:bg-slate-700"
                 }`}
               >
                 <tab.icon className="w-5 h-5" />
@@ -177,7 +173,7 @@ export default function Dashboard() {
               {stats.map((stat, index) => (
                 <motion.div
                   key={stat.title}
-                  className="bg-white rounded-2xl p-6 shadow-sm border border-slate-100 hover:shadow-md transition-all duration-300"
+                  className="bg-white dark:bg-slate-800 rounded-2xl p-6 shadow-sm border border-slate-100 dark:border-slate-700 hover:shadow-md transition-all duration-300"
                   whileHover={{ y: -2 }}
                   initial={{ opacity: 0, y: 20 }}
                   animate={{ opacity: 1, y: 0 }}
@@ -189,17 +185,18 @@ export default function Dashboard() {
                     >
                       <stat.icon className="w-6 h-6 text-white" />
                     </div>
-                    <span className="text-sm font-semibold text-green-600">
+                    <span className="text-sm font-semibold text-green-600 dark:text-green-400">
                       {stat.change}
                     </span>
                   </div>
-                  <h3 className="text-2xl font-bold text-slate-900 mb-1">
+                  <h3 className="text-2xl font-bold text-slate-900 dark:text-white mb-1">
                     {stat.value}
                   </h3>
-                  <p className="text-slate-600 text-sm">{stat.title}</p>
+                  <p className="text-slate-600 dark:text-slate-300 text-sm">{stat.title}</p>
                 </motion.div>
               ))}
             </motion.div>
+
             <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
               <motion.div
                 className="lg:col-span-2"
@@ -220,6 +217,7 @@ export default function Dashboard() {
             </div>
           </>
         )}
+
         {/* Placeholder for other sections */}
         {activeSection !== "overview" && (
           <motion.div
@@ -229,21 +227,21 @@ export default function Dashboard() {
           >
             <div className="flex flex-col items-center">
               {activeSection === "documents" && (
-                <FileText className="w-20 h-20 text-slate-300 mb-4" />
+                <FileText className="w-20 h-20 text-slate-300 dark:text-slate-600 mb-4" />
               )}
               {activeSection === "practice" && (
-                <Brain className="w-20 h-20 text-slate-300 mb-4" />
+                <Brain className="w-20 h-20 text-slate-300 dark:text-slate-600 mb-4" />
               )}
               {activeSection === "community" && (
-                <Users className="w-20 h-20 text-slate-300 mb-4" />
+                <Users className="w-20 h-20 text-slate-300 dark:text-slate-600 mb-4" />
               )}
               {activeSection === "analytics" && (
-                <TrendingUp className="w-20 h-20 text-slate-300 mb-4" />
+                <TrendingUp className="w-20 h-20 text-slate-300 dark:text-slate-600 mb-4" />
               )}
-              <h3 className="text-2xl font-bold text-slate-900 mb-2 capitalize">
+              <h3 className="text-2xl font-bold text-slate-900 dark:text-white mb-2 capitalize">
                 {activeSection}
               </h3>
-              <p className="text-slate-600">
+              <p className="text-slate-600 dark:text-slate-300">
                 Content for {activeSection} will appear here.
               </p>
             </div>

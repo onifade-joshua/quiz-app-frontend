@@ -44,8 +44,8 @@ export const Navbar: React.FC = () => {
             to="/dashboard"
             className={`flex items-center px-3 py-2 rounded-md text-sm font-medium transition-colors ${
               isActive("/dashboard")
-                ? "text-primary-600 bg-primary-50"
-                : "text-gray-700 hover:text-primary-600"
+                ? "text-primary-600 bg-primary-50 dark:bg-slate-700 dark:text-yellow-400"
+                : "text-gray-700 hover:text-primary-600 dark:text-gray-300 dark:hover:text-yellow-400"
             }`}
             onClick={() => setMobileOpen(false)}
           >
@@ -58,8 +58,8 @@ export const Navbar: React.FC = () => {
             to="/study-community"
             className={`flex items-center px-3 py-2 rounded-md text-sm font-medium transition-colors ${
               isActive("/study-community")
-                ? "text-primary-600 bg-primary-50"
-                : "text-gray-700 hover:text-primary-600"
+                ? "text-primary-600 bg-primary-50 dark:bg-slate-700 dark:text-yellow-400"
+                : "text-gray-700 hover:text-primary-600 dark:text-gray-300 dark:hover:text-yellow-400"
             }`}
             onClick={() => setMobileOpen(false)}
           >
@@ -72,8 +72,8 @@ export const Navbar: React.FC = () => {
             to="/cbt-practice"
             className={`flex items-center px-3 py-2 rounded-md text-sm font-medium transition-colors ${
               isActive("/cbt-practice")
-                ? "text-primary-600 bg-primary-50"
-                : "text-gray-700 hover:text-primary-600"
+                ? "text-primary-600 bg-primary-50 dark:bg-slate-700 dark:text-yellow-400"
+                : "text-gray-700 hover:text-primary-600 dark:text-gray-300 dark:hover:text-yellow-400"
             }`}
             onClick={() => setMobileOpen(false)}
           >
@@ -86,8 +86,8 @@ export const Navbar: React.FC = () => {
             to="/profile"
             className={`flex items-center px-3 py-2 rounded-md text-sm font-medium transition-colors ${
               isActive("/profile")
-                ? "text-primary-600 bg-primary-50"
-                : "text-gray-700 hover:text-primary-600"
+                ? "text-primary-600 bg-primary-50 dark:bg-slate-700 dark:text-yellow-400"
+                : "text-gray-700 hover:text-primary-600 dark:text-gray-300 dark:hover:text-yellow-400"
             }`}
             onClick={() => setMobileOpen(false)}
           >
@@ -102,12 +102,15 @@ export const Navbar: React.FC = () => {
 
   return (
     <>
-      <nav className="bg-white shadow-sm border-b">
+      <nav className="bg-white dark:bg-slate-900 shadow-sm border-b border-gray-200 dark:border-slate-700">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex justify-between h-16 items-center">
             {/* Left side */}
             <div className="flex items-center">
-              <Link to="/" className="text-xl font-bold text-yellow-500">
+              <Link
+                to="/"
+                className="text-xl font-bold text-yellow-500 dark:text-yellow-400"
+              >
                 ClassWise
               </Link>
 
@@ -121,17 +124,20 @@ export const Navbar: React.FC = () => {
             <div className="hidden md:flex items-center space-x-4">
               {user ? (
                 <>
-                  <span className="text-sm text-gray-600">
+                  <span className="text-sm text-gray-600 dark:text-gray-300">
                     Welcome, {user.name}
                   </span>
-                  <Button onClick={() => setShowConfirm(true)} variant="secondary">
+                  <Button
+                    onClick={() => setShowConfirm(true)}
+                    variant="secondary"
+                  >
                     Logout
                   </Button>
                 </>
               ) : (
                 <Link
                   to="/auth"
-                  className="text-sm font-medium text-gray-700 hover:text-primary-600"
+                  className="text-sm font-medium text-gray-700 hover:text-primary-600 dark:text-gray-300 dark:hover:text-yellow-400"
                 >
                   Login
                 </Link>
@@ -142,7 +148,7 @@ export const Navbar: React.FC = () => {
             <div className="md:hidden flex items-center">
               <button
                 onClick={() => setMobileOpen(!mobileOpen)}
-                className="text-gray-600 hover:text-primary-600 focus:outline-none"
+                className="text-gray-600 hover:text-primary-600 dark:text-gray-300 dark:hover:text-yellow-400 focus:outline-none"
               >
                 {mobileOpen ? (
                   <XMarkIcon className="h-6 w-6" />
@@ -156,11 +162,11 @@ export const Navbar: React.FC = () => {
 
         {/* Mobile menu dropdown */}
         {mobileOpen && (
-          <div className="md:hidden px-4 pb-3 space-y-2 border-t">
+          <div className="md:hidden px-4 pb-3 space-y-2 border-t border-gray-200 dark:border-slate-700 bg-white dark:bg-slate-900">
             <NavLinks />
             {user ? (
               <div className="space-y-2">
-                <span className="block text-sm text-gray-600">
+                <span className="block text-sm text-gray-600 dark:text-gray-300">
                   Welcome, {user.name}
                 </span>
                 <Button
@@ -174,7 +180,7 @@ export const Navbar: React.FC = () => {
             ) : (
               <Link
                 to="/auth"
-                className="block text-sm font-medium text-gray-700 hover:text-primary-600"
+                className="block text-sm font-medium text-gray-700 hover:text-primary-600 dark:text-gray-300 dark:hover:text-yellow-400"
                 onClick={() => setMobileOpen(false)}
               >
                 Login
