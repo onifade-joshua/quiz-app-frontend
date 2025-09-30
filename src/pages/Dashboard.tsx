@@ -21,22 +21,24 @@ import {
   BarChart3,
   Bell,
 } from "lucide-react"
-
 import DocumentImportSection, { type DocumentType } from "../components/common/DocumentImportSection"
 import QuickActionsSection, { type QuickAction } from "../components/common/QuickActionsSection"
 import DashboardSidebar from "../components/common/DashboardSidebar"
 import { Navbar } from "../components/common/Navbar"
 import { useStore } from "../store/useStore"
 
-export default function Dashboard() {
-  // ✅ get logged in user from store
-  const { user } = useStore()
+// ✅ Import modals
+import Notification from "../components/common/Notification"
+import Setting from "../components/common/Setting"
 
-  // fallback if no user is available
+export default function Dashboard() {
+  const [notificationOpen, setNotificationOpen] = useState(false)
+  const [settingsOpen, setSettingsOpen] = useState(false)
+  const [activeSection, setActiveSection] = useState("overview")
+
+  const { user } = useStore()
   const displayName = user?.name || "Guest"
   const firstName = displayName.split(" ")[0]
-
-  // you can compute streak from user data if available, else default to 0
   const streak = user?.streak ?? 0
 
   const stats = [
@@ -68,8 +70,6 @@ export default function Dashboard() {
     { title: "Audio Explanations", description: "Listen to detailed explanations", icon: Headphones, gradient: "from-purple-500 to-purple-600", difficulty: "New Content", route: "/audio-page" },
   ]
 
-  const [activeSection, setActiveSection] = useState("overview")
-
   const dashboardTabs = [
     { id: "overview", label: "Overview", icon: BarChart3 },
     { id: "documents", label: "Documents", icon: FileText },
@@ -81,6 +81,16 @@ export default function Dashboard() {
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-50 via-white to-blue-50">
       <Navbar />
+
+      {/* ✅ Modals */}
+      <Notification
+        isOpen={notificationOpen}
+        onClose={() => setNotificationOpen(false)}
+      />
+      <Setting
+        isOpen={settingsOpen}
+        onClose={() => setSettingsOpen(false)}
+      />
 
       {/* Header */}
       <motion.div
@@ -101,7 +111,6 @@ export default function Dashboard() {
                   document analyses and 12 practice questions waiting.
                 </p>
               </div>
-
               {/* Search & Actions */}
               <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-3 sm:gap-4 w-full sm:w-auto">
                 <div className="relative flex-1 sm:flex-none">
@@ -113,18 +122,27 @@ export default function Dashboard() {
                   />
                 </div>
                 <div className="flex items-center justify-end sm:justify-start gap-3">
-                  <button className="relative p-2 text-slate-400 hover:text-slate-600 transition-colors">
+                  {/* Notifications */}
+                  <button
+                    onClick={() => setNotificationOpen(true)}
+                    aria-label="Open notifications"
+                    className="relative p-2 text-slate-400 hover:text-slate-600 hover:bg-slate-100 rounded-lg transition-all"
+                  >
                     <Bell className="w-5 h-5" />
-                    <span className="absolute -top-1 -right-1 w-3 h-3 bg-red-500 rounded-full"></span>
+                    <span className="absolute top-1 right-1 w-2 h-2 bg-red-500 rounded-full"></span>
                   </button>
-                  <button className="p-2 text-slate-400 hover:text-slate-600 transition-colors">
+                  {/* Settings */}
+                  <button
+                    onClick={() => setSettingsOpen(true)}
+                    aria-label="Open settings"
+                    className="p-2 text-slate-400 hover:text-slate-600 hover:bg-slate-100 rounded-lg transition-all"
+                  >
                     <Settings className="w-5 h-5" />
                   </button>
                 </div>
               </div>
             </div>
           </div>
-
           {/* Tabs */}
           <div className="flex overflow-x-auto flex-nowrap space-x-4 sm:space-x-8 py-4 scrollbar-hide">
             {dashboardTabs.map((tab) => (
@@ -182,7 +200,6 @@ export default function Dashboard() {
                 </motion.div>
               ))}
             </motion.div>
-
             <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
               <motion.div
                 className="lg:col-span-2"
@@ -203,7 +220,6 @@ export default function Dashboard() {
             </div>
           </>
         )}
-
         {/* Placeholder for other sections */}
         {activeSection !== "overview" && (
           <motion.div
