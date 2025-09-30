@@ -1,6 +1,6 @@
 import { motion, AnimatePresence } from "framer-motion"
 import { X, Sun, Moon } from "lucide-react"
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import { useStore } from "../../store/useStore"
 
 interface SettingProps {
@@ -11,6 +11,26 @@ interface SettingProps {
 export default function Setting({ isOpen, onClose }: SettingProps) {
   const { user } = useStore()
   const [darkMode, setDarkMode] = useState(false)
+
+  // 👉 Load theme from localStorage on mount
+  useEffect(() => {
+    const savedTheme = localStorage.getItem("theme")
+    if (savedTheme === "dark") {
+      setDarkMode(true)
+      document.documentElement.classList.add("dark")
+    }
+  }, [])
+
+  // 👉 Save theme to localStorage whenever it changes
+  useEffect(() => {
+    if (darkMode) {
+      document.documentElement.classList.add("dark")
+      localStorage.setItem("theme", "dark")
+    } else {
+      document.documentElement.classList.remove("dark")
+      localStorage.setItem("theme", "light")
+    }
+  }, [darkMode])
 
   return (
     <AnimatePresence>
@@ -29,7 +49,7 @@ export default function Setting({ isOpen, onClose }: SettingProps) {
                 Settings
               </h3>
               <button onClick={onClose} aria-label="Close settings">
-                <X className="h-5 w-5 text-slate-500" />
+                <X className="h-5 w-5 text-slate-500 dark:text-slate-300" />
               </button>
             </div>
 
