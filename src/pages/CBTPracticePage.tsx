@@ -29,7 +29,7 @@ export default function CBTPracticePage() {
     const newDocuments: ImportedDocument[] = Object.entries(files).map(([type, file], index) => ({
       id: `doc-${Date.now()}-${index}`,
       title: file.name,
-      type: type as any,
+      type: type as ImportedDocument['type'], // ✅ avoid `any`
       content: 'Sample content extracted from the document',
       imageUrl: (type === 'screenshot' || type === 'image') ? URL.createObjectURL(file) : undefined,
       audioUrl: type === 'audio' ? URL.createObjectURL(file) : undefined,
@@ -50,19 +50,18 @@ export default function CBTPracticePage() {
   const handleStartQuiz = (difficulty: 'mixed' | 'easy' | 'hard', duration: number, questionCount: number) => {
     const questions = generateQuestions(selectedDocuments, difficulty, questionCount)
 
-    // inside handleStartQuiz
-const session: CBTSession = {
-  id: Date.now().toString(),
-  title: `CBT Practice - ${new Date().toLocaleDateString()}`,
-  documentIds: selectedDocuments,
-  questions,
-  difficulty,
-  timeLimit: duration,
-  totalQuestions: questions.length,
-  status: 'in_progress',
-  startedAt: new Date().toISOString(),
-  userId: "demo-user"   
-}
+    const session: CBTSession = {
+      id: Date.now().toString(),
+      title: `CBT Practice - ${new Date().toLocaleDateString()}`,
+      documentIds: selectedDocuments,
+      questions,
+      difficulty,
+      timeLimit: duration,
+      totalQuestions: questions.length,
+      status: 'in_progress',
+      startedAt: new Date().toISOString(),
+      userId: "demo-user"   
+    }
 
     setCurrentSession(session)
     setAnswers({})
@@ -132,13 +131,13 @@ const session: CBTSession = {
     <div className="min-h-screen bg-gradient-to-br from-slate-50 via-white to-blue-50">
       {/* Header */}
       <div className="bg-white border-b border-slate-200 sticky top-0 z-50 shadow-sm">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 py-4">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 py-3 sm:py-4">
           <div className="flex items-center justify-between">
-            <div className="flex items-center space-x-4">
-              <Brain className="w-8 h-8 text-blue-600" />
-              <div>
-                <h1 className="text-2xl font-bold text-slate-900">CBT Practice System</h1>
-                <p className="text-slate-600 text-sm">{viewTitles[currentView]}</p>
+            <div className="flex items-center space-x-3 sm:space-x-4">
+              <Brain className="w-6 h-6 sm:w-8 sm:h-8 text-blue-600 flex-shrink-0" />
+              <div className="min-w-0">
+                <h1 className="text-lg sm:text-2xl font-bold text-slate-900 truncate">CBT Practice System</h1>
+                <p className="text-slate-600 text-xs sm:text-sm truncate">{viewTitles[currentView]}</p>
               </div>
             </div>
 
@@ -163,7 +162,7 @@ const session: CBTSession = {
       </div>
 
       {/* Main Content */}
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 py-8">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 py-4 sm:py-8">
         <AnimatePresence mode="wait">
           {currentView === 'import' && (
             <motion.div key="import" initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -20 }}>
