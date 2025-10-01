@@ -97,8 +97,9 @@ export default function DocumentList({
                       onClick={(e) => e.stopPropagation()}
                       className="mr-2 sm:mr-3 w-4 h-4 text-blue-600 rounded flex-shrink-0"
                     />
+                    {/* ✅ Truncate long filenames */}
                     <h3
-                      className="font-semibold text-slate-900 text-sm sm:text-base truncate"
+                      className="font-semibold text-slate-900 text-sm sm:text-base truncate max-w-[160px] sm:max-w-[240px]"
                       title={doc.title}
                     >
                       {doc.title}
