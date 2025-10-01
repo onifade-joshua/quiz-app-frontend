@@ -6,6 +6,7 @@ import { useStore } from '../store/useStore'
 import { authAPI } from '../services/api'
 import toast from 'react-hot-toast'
 import { motion } from 'framer-motion'
+import Logo from '../../src/assets/classwise-img.jpg'
 
 export const AuthPage: React.FC = () => {
   const [isLogin, setIsLogin] = useState(true)
@@ -65,7 +66,7 @@ export const AuthPage: React.FC = () => {
           initial={{ scale: 1.2 }}
           animate={{ scale: 1 }}
           transition={{ duration: 1.2, ease: 'easeOut' }}
-          src="https://img.freepik.com/free-vector/quiz-comic-pop-art-style_175838-505.jpg"
+          src={Logo}
           alt="ClassWise"
           className="w-full h-full object-cover"
         />
