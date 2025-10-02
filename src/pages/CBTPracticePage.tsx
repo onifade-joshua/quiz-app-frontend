@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { AnimatePresence, motion } from 'framer-motion'
 import { Brain, CheckCircle } from 'lucide-react'
 import DocumentImport from '../components/cbt/DocumentImport'
@@ -14,6 +14,8 @@ import { generateQuestions, calculateResults } from '../utils/cbtHelpers'
 
 type ViewType = 'import' | 'documents' | 'quiz-setup' | 'quiz' | 'results' | 'review'
 
+const FREE_TRIAL_LIMIT = 5
+
 export default function CBTPracticePage() {
   const [currentView, setCurrentView] = useState<ViewType>('import')
   const [documents, setDocuments] = useState<ImportedDocument[]>([])
@@ -24,8 +26,22 @@ export default function CBTPracticePage() {
   const [results, setResults] = useState<CBTResult | null>(null)
   const [isPremium, setIsPremium] = useState<boolean>(false)
   const [showPaymentModal, setShowPaymentModal] = useState<boolean>(false)
+  const [trialCount, setTrialCount] = useState<number>(0)
 
   const { isPlaying, playAudio, audioRef } = useAudioPlayer()
+
+  useEffect(() => {
+    const storedTrialCount = localStorage.getItem('cbt_trial_count')
+    const storedPremiumStatus = localStorage.getItem('cbt_premium_status')
+    
+    if (storedTrialCount) {
+      setTrialCount(parseInt(storedTrialCount, 10))
+    }
+    
+    if (storedPremiumStatus === 'true') {
+      setIsPremium(true)
+    }
+  }, [])
 
   const handleProcessComplete = (files: Record<string, File>) => {
     const newDocuments: ImportedDocument[] = Object.entries(files).map(([type, file], index) => ({
@@ -49,15 +65,24 @@ export default function CBTPracticePage() {
   }
 
   const handleStartCBT = () => {
-    if (!isPremium) {
+    if (isPremium) {
+      setCurrentView('quiz-setup')
+      return
+    }
+
+    if (trialCount >= FREE_TRIAL_LIMIT) {
       setShowPaymentModal(true)
     } else {
+      const newTrialCount = trialCount + 1
+      setTrialCount(newTrialCount)
+      localStorage.setItem('cbt_trial_count', newTrialCount.toString())
       setCurrentView('quiz-setup')
     }
   }
 
   const handlePaymentSuccess = () => {
     setIsPremium(true)
+    localStorage.setItem('cbt_premium_status', 'true')
     setShowPaymentModal(false)
     setCurrentView('quiz-setup')
   }
@@ -136,6 +161,8 @@ export default function CBTPracticePage() {
     review: 'Review answers and explanations'
   }
 
+  const remainingTrials = Math.max(0, FREE_TRIAL_LIMIT - trialCount)
+
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-50 via-white to-blue-50">
       <div className="bg-white border-b border-slate-200 sticky top-0 z-50 shadow-sm">
@@ -150,11 +177,17 @@ export default function CBTPracticePage() {
             </div>
 
             <div className="flex items-center gap-3">
-              {isPremium && (
+              {isPremium ? (
                 <div className="flex items-center gap-2 px-3 py-1.5 bg-gradient-to-r from-yellow-400 to-yellow-600 rounded-full shadow-sm">
                   <CheckCircle className="w-4 h-4 text-white" />
                   <span className="text-xs font-semibold text-white hidden sm:inline">PREMIUM</span>
                   <span className="text-xs font-semibold text-white sm:hidden">PRO</span>
+                </div>
+              ) : (
+                <div className="flex items-center gap-2 px-3 py-1.5 bg-slate-100 rounded-full">
+                  <span className="text-xs font-medium text-slate-700">
+                    {remainingTrials} {remainingTrials === 1 ? 'trial' : 'trials'} left
+                  </span>
                 </div>
               )}
 
@@ -254,6 +287,7 @@ export default function CBTPracticePage() {
         <PaymentModal
           onClose={() => setShowPaymentModal(false)}
           onPaymentSuccess={handlePaymentSuccess}
+          trialsUsed={trialCount}
         />
       )}
     </div>

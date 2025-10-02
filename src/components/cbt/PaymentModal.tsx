@@ -1,33 +1,30 @@
 import { useState } from 'react'
 import { motion } from 'framer-motion'
-import { X, Lock, CheckCircle, CreditCard, Shield, Building2 } from 'lucide-react'
+import { X, Lock, CheckCircle, CreditCard, Shield, Building2, AlertCircle } from 'lucide-react'
 
 interface PaymentModalProps {
   onClose: () => void
   onPaymentSuccess: () => void
+  trialsUsed?: number
 }
 
-export default function PaymentModal({ onClose, onPaymentSuccess }: PaymentModalProps) {
+export default function PaymentModal({ onClose, onPaymentSuccess, trialsUsed = 0 }: PaymentModalProps) {
   const [isProcessing, setIsProcessing] = useState(false)
   const [showSuccess, setShowSuccess] = useState(false)
 
-  // Dummy payment handler - Replace with actual Paystack integration
   const handleDummyPayment = () => {
     setIsProcessing(true)
     
-    // Simulate payment processing (2 seconds)
     setTimeout(() => {
       setIsProcessing(false)
       setShowSuccess(true)
       
-      // Show success message, then proceed
       setTimeout(() => {
         onPaymentSuccess()
       }, 1500)
     }, 2000)
   }
 
-  // Success Screen
   if (showSuccess) {
     return (
       <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
@@ -46,7 +43,6 @@ export default function PaymentModal({ onClose, onPaymentSuccess }: PaymentModal
     )
   }
 
-  // Main Payment Modal
   return (
     <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
       <motion.div
@@ -54,7 +50,6 @@ export default function PaymentModal({ onClose, onPaymentSuccess }: PaymentModal
         animate={{ scale: 1, opacity: 1 }}
         className="bg-white rounded-2xl p-6 sm:p-8 max-w-lg w-full relative max-h-[90vh] overflow-y-auto"
       >
-        {/* Close Button */}
         <button
           onClick={onClose}
           className="absolute top-4 right-4 text-slate-400 hover:text-slate-600 transition-colors z-10"
@@ -62,7 +57,6 @@ export default function PaymentModal({ onClose, onPaymentSuccess }: PaymentModal
           <X className="w-6 h-6" />
         </button>
 
-        {/* Header */}
         <div className="text-center mb-6">
           <div className="w-16 h-16 bg-gradient-to-br from-blue-600 to-purple-600 rounded-full flex items-center justify-center mx-auto mb-4">
             <Lock className="w-8 h-8 text-white" />
@@ -75,7 +69,20 @@ export default function PaymentModal({ onClose, onPaymentSuccess }: PaymentModal
           </p>
         </div>
 
-        {/* Premium Features */}
+        {trialsUsed >= 5 && (
+          <div className="bg-orange-50 border border-orange-200 rounded-xl p-4 mb-6">
+            <div className="flex items-start gap-3">
+              <AlertCircle className="w-5 h-5 text-orange-600 flex-shrink-0 mt-0.5" />
+              <div>
+                <h4 className="font-semibold text-orange-900 text-sm mb-1">Free Trial Limit Reached</h4>
+                <p className="text-orange-700 text-xs">
+                  You have used all {trialsUsed} free trials. Subscribe now to continue practicing without limits.
+                </p>
+              </div>
+            </div>
+          </div>
+        )}
+
         <div className="bg-gradient-to-br from-blue-50 to-purple-50 rounded-xl p-6 mb-6 border border-blue-100">
           <h3 className="font-semibold text-slate-900 mb-4 text-center">Premium Features</h3>
           <div className="space-y-3">
@@ -96,7 +103,6 @@ export default function PaymentModal({ onClose, onPaymentSuccess }: PaymentModal
           </div>
         </div>
 
-        {/* Pricing Card */}
         <div className="bg-slate-900 text-white rounded-xl p-6 mb-6">
           <div className="text-center">
             <div className="flex items-baseline justify-center gap-2 mb-2">
@@ -108,7 +114,6 @@ export default function PaymentModal({ onClose, onPaymentSuccess }: PaymentModal
           </div>
         </div>
 
-        {/* Payment Button */}
         <button
           onClick={handleDummyPayment}
           disabled={isProcessing}
@@ -127,7 +132,6 @@ export default function PaymentModal({ onClose, onPaymentSuccess }: PaymentModal
           )}
         </button>
 
-        {/* Payment Methods */}
         <div className="flex items-center justify-center gap-4 mb-4 text-sm text-slate-600">
           <div className="flex items-center gap-1.5">
             <CreditCard className="w-4 h-4" />
@@ -140,16 +144,14 @@ export default function PaymentModal({ onClose, onPaymentSuccess }: PaymentModal
           </div>
         </div>
 
-        {/* Security Badge */}
         <div className="flex items-center justify-center gap-2 text-xs text-slate-500 mb-4">
           <Shield className="w-4 h-4" />
           <span>Secured by Paystack • SSL Encrypted</span>
         </div>
 
-        {/* Test Mode Warning */}
         <div className="p-3 bg-yellow-50 border border-yellow-200 rounded-lg">
           <p className="text-xs text-yellow-800 text-center font-medium">
-            ⚠️ TEST MODE: Dummy payment for testing purposes
+            TEST MODE: Dummy payment for testing purposes
           </p>
         </div>
       </motion.div>
