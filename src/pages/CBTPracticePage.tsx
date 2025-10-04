@@ -68,20 +68,21 @@ export default function CBTPracticePage() {
   }
 
   const handleStartCBT = () => {
-    if (isPremium) {
-      setCurrentView('quiz-setup')
-      return
-    }
-
-    if (trialCount >= FREE_TRIAL_LIMIT) {
-      setShowPaymentModal(true)
-    } else {
-      const newTrialCount = trialCount + 1
-      setTrialCount(newTrialCount)
-      localStorage.setItem('cbt_trial_count', newTrialCount.toString())
-      setCurrentView('quiz-setup')
-    }
+  // Check premium status first
+  if (isPremium) {
+    setCurrentView('quiz-setup')
+    return
   }
+
+  // Check if trials are exhausted BEFORE allowing access
+  if (trialCount >= FREE_TRIAL_LIMIT) {
+    setShowPaymentModal(true)
+    return // Prevent navigation to quiz-setup
+  }
+
+  // User still has trials - proceed to quiz setup
+  setCurrentView('quiz-setup')
+}
 
   const handlePaymentSuccess = () => {
     setIsPremium(true)
@@ -91,38 +92,45 @@ export default function CBTPracticePage() {
   }
 
   const handleStartQuiz = (
-    difficulty: 'mixed' | 'easy' | 'hard', 
-    duration: number, 
-    questionCount: number,
-    questionType: 'objective' | 'theory'
-  ) => {
-    let questions: any[]
-
-    if (questionType === 'theory') {
-      questions = generateTheoryQuestions(selectedDocuments, documents, questionCount)
-    } else {
-      questions = generateQuestions(selectedDocuments, difficulty, questionCount)
-    }
-
-    const session: CBTSession = {
-      id: Date.now().toString(),
-      title: `${questionType === 'theory' ? 'Theory' : 'CBT'} Practice - ${new Date().toLocaleDateString()}`,
-      documentIds: selectedDocuments,
-      questions,
-      difficulty,
-      timeLimit: duration,
-      totalQuestions: questions.length,
-      status: 'in_progress',
-      startedAt: new Date().toISOString(),
-      userId: "demo-user",
-      questionType
-    }
-
-    setCurrentSession(session)
-    setAnswers({})
-    setFlaggedQuestions(new Set())
-    setCurrentView(questionType === 'theory' ? 'theory-quiz' : 'quiz')
+  difficulty: 'mixed' | 'easy' | 'hard', 
+  duration: number, 
+  questionCount: number,
+  questionType: 'objective' | 'theory'
+) => {
+  // Increment trial counter for non-premium users
+  if (!isPremium) {
+    const newTrialCount = trialCount + 1
+    setTrialCount(newTrialCount)
+    localStorage.setItem('cbt_trial_count', newTrialCount.toString())
   }
+
+  let questions: any[]
+
+  if (questionType === 'theory') {
+    questions = generateTheoryQuestions(selectedDocuments, documents, questionCount)
+  } else {
+    questions = generateQuestions(selectedDocuments, difficulty, questionCount)
+  }
+
+  const session: CBTSession = {
+    id: Date.now().toString(),
+    title: `${questionType === 'theory' ? 'Theory' : 'CBT'} Practice - ${new Date().toLocaleDateString()}`,
+    documentIds: selectedDocuments,
+    questions,
+    difficulty,
+    timeLimit: duration,
+    totalQuestions: questions.length,
+    status: 'in_progress',
+    startedAt: new Date().toISOString(),
+    userId: "demo-user",
+    questionType
+  }
+
+  setCurrentSession(session)
+  setAnswers({})
+  setFlaggedQuestions(new Set())
+  setCurrentView(questionType === 'theory' ? 'theory-quiz' : 'quiz')
+}
 
   const handleAnswerSelect = (questionId: string, answer: 'A' | 'B' | 'C' | 'D') => {
     setAnswers(prev => ({
