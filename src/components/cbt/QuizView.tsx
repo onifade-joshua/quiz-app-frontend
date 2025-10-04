@@ -7,7 +7,7 @@ import {
   ArrowRight,
   CheckCircle
 } from 'lucide-react'
-import type { CBTSession, CBTAnswer } from '../../types'
+import type { CBTSession, CBTAnswer, Question } from '../../types'
 import { formatTime } from '../../utils/cbtHelpers'
 import { useCBTTimer } from '../hooks/useCBTTimer'
 
@@ -40,8 +40,10 @@ export default function QuizView({
     handleAutoSubmit
   )
 
-  const currentQuestion = session.questions[currentQuestionIndex]
-  const progress = ((currentQuestionIndex + 1) / session.questions.length) * 100
+  // ✅ FIX: Type assertion - QuizView only handles objective questions
+  const questions = session.questions as Question[]
+  const currentQuestion = questions[currentQuestionIndex]
+  const progress = ((currentQuestionIndex + 1) / questions.length) * 100
   const answeredCount = Object.keys(answers).length
 
   return (
@@ -51,7 +53,7 @@ export default function QuizView({
         <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 sm:gap-0 mb-4">
           <div className="flex items-center space-x-2 sm:space-x-4">
             <span className="bg-blue-100 text-blue-800 px-2 sm:px-3 py-1 rounded-full text-xs sm:text-sm font-medium">
-              Question {currentQuestionIndex + 1} of {session.questions.length}
+              Question {currentQuestionIndex + 1} of {questions.length}
             </span>
             <span className="text-xs sm:text-sm text-slate-600">
               {answeredCount} answered
@@ -158,8 +160,8 @@ export default function QuizView({
           </button>
 
           <button
-            onClick={() => setCurrentQuestionIndex(Math.min(session.questions.length - 1, currentQuestionIndex + 1))}
-            disabled={currentQuestionIndex === session.questions.length - 1}
+            onClick={() => setCurrentQuestionIndex(Math.min(questions.length - 1, currentQuestionIndex + 1))}
+            disabled={currentQuestionIndex === questions.length - 1}
             className="flex items-center px-3 sm:px-4 py-2 text-slate-600 hover:text-slate-800 disabled:opacity-50 disabled:cursor-not-allowed transition-colors text-sm sm:text-base"
           >
             <span className="hidden sm:inline">Next</span>
@@ -170,7 +172,7 @@ export default function QuizView({
 
         {/* Question Grid */}
         <div className="flex flex-wrap gap-2 justify-center">
-          {session.questions.map((q, index) => (
+          {questions.map((q, index) => (
             <button
               key={q.id}
               onClick={() => setCurrentQuestionIndex(index)}

@@ -68,23 +68,30 @@ Once backend is connected:
 ```
 src/
 ├── components/          # Reusable UI components
-│   ├── common/   Button.tsx,  Dashboard.tsx, Input.tsx, LoadingSpinner.tsx, Navbar.tsx, Profile.tsx, Result.tsx     
+│   ├── common/   Button.tsx, Input.tsx, LoadingSpinner.tsx, Navbar.tsx, ConfirmationModal.tsx, DashboardSidebar.tsx, DocumentImportSection.tsx, Notification.tsx, PerformanceInsightSection.tsx, QuickActionsSection.tsx, RecentActivitySection.tsx, Setting.tsx, StudyGoalsSection.tsx, SupportChat.tsx
 │   ├── auth/  LoginForm.tsx, RegisterForm.tsx         # Authentication components
-│   ├── questions/  QuestioCard.tsx, QuestionForm.tsx, QuestionList.tsx    # Question management components
-│   └── quiz/  QuizQuestion.tsx, QuizResult.tsx, Timer.tsx         # Quiz taking components
-├── ProtectedRoute.tsx 
+│   ├── cbt/ DocumentImport.tsx, DocumentList.tsx, PaymentModal.tsx, QuizSetup, QuizView.tsx, ResultsView.tsx, ReviewView.tsx 
+│   └── hooks/  useAudioPlayer.ts, useCBTTimer.ts
+├── ProtectedRoute.tsx
+├── data/ mockCommunityData.ts, mockData.ts
+|    
 ├── pages/              # Route-level components
 │   ├── AuthPage.tsx    # Login/Register page
-│   ├── QuestionsPage.tsx # Questions management
-│   └── QuizPage.tsx    # Quiz interface
+│   ├── AudioPage.tsx 
+│   └── CBTPracticePage.tsx
+|   |Dashboard.tsx 
+|   |ForgetPassword.tsx 
+|   |ProfilePage.tsx 
+|   |ResetPassword.tsx 
+|   |StudyCommunity.tsx 
 ├── services/           # API service layer
-│   └── api.ts          # Axios configuration and API calls
+│   └── api.ts , communityAPI.ts, mockAuthAPI.ts
 ├── store/              # State management
-│   └── useStore.ts     # Zustand store configuration
+│   └── useStore.ts, useCommunityStore.ts, useStore.ts     # Zustand store configuration
 ├── types/              # TypeScript type definitions
 │   └── index.ts        # Shared interfaces and types
 ├── utils/              # Helper functions
-│   └── helpers.ts      # Utility functions
+│   └── helpers.ts, cbtHelpers.ts, mockUtils.ts      # Utility functions
 └── App.tsx
 ├── main.tsx 
              

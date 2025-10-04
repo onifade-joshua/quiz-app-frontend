@@ -77,14 +77,15 @@ export interface CBTSession {
   id: string
   title: string
   documentIds: string[]
-  questions: Question[]
+  questions: Question[] | TheoryQuestion[]  // ✅ UPDATED: Can be either type
   difficulty: "easy" | "hard" | "mixed"
   timeLimit: number // in minutes
   totalQuestions: number
   status: "not_started" | "in_progress" | "completed" | "auto_submitted"
   startedAt?: string
   completedAt?: string
-  userId: string // ✅ standardized (replaced hostId → userId)
+  userId: string
+  questionType?: 'objective' | 'theory'  // ✅ NEW: Track question type
 }
 
 // ==================== CBT Answer ====================
@@ -122,6 +123,29 @@ export interface CBTResult {
   timeSpent: number
   completedAt: string
   autoSubmitted: boolean
+}
+
+// ==================== THEORY QUESTION TYPES (NEW) ====================
+
+// Theory Question - for essay-style questions
+export interface TheoryQuestion {
+  id: string
+  question: string
+  suggestedAnswer: string
+  points: number
+  topic?: string
+  documentId?: string
+  difficulty?: "easy" | "medium" | "hard"
+}
+
+// Theory Result - for reviewing theory answers
+export interface TheoryResult {
+  questionId: string
+  question: string
+  userAnswer: string
+  suggestedAnswer: string
+  points: number
+  topic?: string
 }
 
 // -----------------------------------

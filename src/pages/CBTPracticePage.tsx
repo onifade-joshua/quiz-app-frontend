@@ -5,14 +5,16 @@ import DocumentImport from '../components/cbt/DocumentImport'
 import DocumentList from '../components/cbt/DocumentList'
 import QuizSetup from '../components/cbt/QuizSetup'
 import QuizView from '../components/cbt/QuizView'
+import TheoryQuizView from '../components/cbt/TheoryQuizView'
 import ResultsView from '../components/cbt/ResultsView'
+import TheoryResultsView from '../components/cbt/TheoryResultsView'
 import ReviewView from '../components/cbt/ReviewView'
 import PaymentModal from '../components/cbt/PaymentModal'
 import { useAudioPlayer } from '../components/hooks/useAudioPlayer'
-import type { ImportedDocument, CBTSession, CBTAnswer, CBTResult } from '../types'
-import { generateQuestions, calculateResults } from '../utils/cbtHelpers'
+import type { ImportedDocument, CBTSession, CBTAnswer, CBTResult, TheoryQuestion, TheoryResult } from '../types'
+import { generateQuestions, calculateResults, generateTheoryQuestions } from '../utils/cbtHelpers'
 
-type ViewType = 'import' | 'documents' | 'quiz-setup' | 'quiz' | 'results' | 'review'
+type ViewType = 'import' | 'documents' | 'quiz-setup' | 'quiz' | 'theory-quiz' | 'results' | 'theory-results' | 'review'
 
 const FREE_TRIAL_LIMIT = 5
 
@@ -24,6 +26,7 @@ export default function CBTPracticePage() {
   const [answers, setAnswers] = useState<Record<string, CBTAnswer>>({})
   const [flaggedQuestions, setFlaggedQuestions] = useState<Set<string>>(new Set())
   const [results, setResults] = useState<CBTResult | null>(null)
+  const [theoryResults, setTheoryResults] = useState<TheoryResult[] | null>(null)
   const [isPremium, setIsPremium] = useState<boolean>(false)
   const [showPaymentModal, setShowPaymentModal] = useState<boolean>(false)
   const [trialCount, setTrialCount] = useState<number>(0)
@@ -87,12 +90,23 @@ export default function CBTPracticePage() {
     setCurrentView('quiz-setup')
   }
 
-  const handleStartQuiz = (difficulty: 'mixed' | 'easy' | 'hard', duration: number, questionCount: number) => {
-    const questions = generateQuestions(selectedDocuments, difficulty, questionCount)
+  const handleStartQuiz = (
+    difficulty: 'mixed' | 'easy' | 'hard', 
+    duration: number, 
+    questionCount: number,
+    questionType: 'objective' | 'theory'
+  ) => {
+    let questions: any[]
+
+    if (questionType === 'theory') {
+      questions = generateTheoryQuestions(selectedDocuments, documents, questionCount)
+    } else {
+      questions = generateQuestions(selectedDocuments, difficulty, questionCount)
+    }
 
     const session: CBTSession = {
       id: Date.now().toString(),
-      title: `CBT Practice - ${new Date().toLocaleDateString()}`,
+      title: `${questionType === 'theory' ? 'Theory' : 'CBT'} Practice - ${new Date().toLocaleDateString()}`,
       documentIds: selectedDocuments,
       questions,
       difficulty,
@@ -100,13 +114,14 @@ export default function CBTPracticePage() {
       totalQuestions: questions.length,
       status: 'in_progress',
       startedAt: new Date().toISOString(),
-      userId: "demo-user"   
+      userId: "demo-user",
+      questionType
     }
 
     setCurrentSession(session)
     setAnswers({})
     setFlaggedQuestions(new Set())
-    setCurrentView('quiz')
+    setCurrentView(questionType === 'theory' ? 'theory-quiz' : 'quiz')
   }
 
   const handleAnswerSelect = (questionId: string, answer: 'A' | 'B' | 'C' | 'D') => {
@@ -137,10 +152,28 @@ export default function CBTPracticePage() {
     setCurrentView('results')
   }
 
+  const handleTheoryQuizComplete = (answersRecord: Record<string, string>) => {
+    if (!currentSession) return
+
+    const theoryQuestions = currentSession.questions as TheoryQuestion[]
+    const theoryResults: TheoryResult[] = theoryQuestions.map(q => ({
+      questionId: q.id,
+      question: q.question,
+      userAnswer: answersRecord[q.id] || '',
+      suggestedAnswer: q.suggestedAnswer,
+      points: q.points,
+      topic: q.topic
+    }))
+
+    setTheoryResults(theoryResults)
+    setCurrentView('theory-results')
+  }
+
   const resetQuiz = () => {
     setCurrentSession(null)
     setAnswers({})
     setResults(null)
+    setTheoryResults(null)
     setFlaggedQuestions(new Set())
     setSelectedDocuments([])
     setCurrentView('documents')
@@ -157,7 +190,9 @@ export default function CBTPracticePage() {
     documents: 'Select documents for practice',
     'quiz-setup': 'Configure your test settings',
     quiz: 'Complete your practice test',
+    'theory-quiz': 'Answer theory questions',
     results: 'View your test results',
+    'theory-results': 'Review your answers',
     review: 'Review answers and explanations'
   }
 
@@ -192,13 +227,13 @@ export default function CBTPracticePage() {
               )}
 
               <div className="hidden md:flex items-center space-x-2">
-                {['import', 'documents', 'quiz-setup', 'quiz', 'results', 'review'].map((view, index) => (
+                {['import', 'documents', 'quiz-setup', 'quiz', 'results'].map((view, index) => (
                   <div
                     key={view}
                     className={`w-3 h-3 rounded-full transition-all duration-300 ${
-                      currentView === view
+                      currentView === view || (currentView === 'theory-quiz' && view === 'quiz') || (currentView === 'theory-results' && view === 'results')
                         ? 'bg-blue-600 scale-125'
-                        : ['import', 'documents', 'quiz-setup', 'quiz', 'results', 'review'].indexOf(currentView) > index
+                        : ['import', 'documents', 'quiz-setup', 'quiz', 'results'].indexOf(currentView) > index
                         ? 'bg-green-500'
                         : 'bg-slate-300'
                     }`}
@@ -256,12 +291,31 @@ export default function CBTPracticePage() {
             </motion.div>
           )}
 
+          {currentView === 'theory-quiz' && currentSession && (
+            <motion.div key="theory-quiz" initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -20 }}>
+              <TheoryQuizView
+                questions={currentSession.questions as TheoryQuestion[]}
+                onComplete={handleTheoryQuizComplete}
+              />
+            </motion.div>
+          )}
+
           {currentView === 'results' && results && (
             <motion.div key="results" initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -20 }}>
               <ResultsView
                 results={results}
                 onReview={() => setCurrentView('review')}
                 onRetake={resetQuiz}
+                onBack={() => setCurrentView('documents')}
+              />
+            </motion.div>
+          )}
+
+          {currentView === 'theory-results' && theoryResults && (
+            <motion.div key="theory-results" initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -20 }}>
+              <TheoryResultsView
+                results={theoryResults}
+                onRetry={resetQuiz}
                 onBack={() => setCurrentView('documents')}
               />
             </motion.div>
